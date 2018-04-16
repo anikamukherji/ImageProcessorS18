@@ -14,3 +14,17 @@
   font-size: 2em;
   font-family: 'Raleway', sans-serif;
 }
+
+.image-container {
+  padding-bottom: 100px;
+}
+
+.basic-text {
+  font-family: 'Raleway', sans-serif;
+}
+
+.toggle {
+  padding-top: 100px;
+  margin: auto;
+  width: 10%;
+}

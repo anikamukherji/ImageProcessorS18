@@ -4,35 +4,24 @@ import '../css/ImageView.css';
 
 class ImageView extends Component {
 
-  constructor() {
-    super()
-    this.state = {
-      imageUploaded: false,
-      imageName: null,
-      image: null,
-    }
-  }
-
-  onDrop = files => {
-
-    if (files.length > 0) {
-      this.setState({
-        imageUploaded: true,
-        imageName: files[0].name,
-        image: files[0].preview,
-      });
-    }
-  }
-
   render() {
+
+    var frameStyle = {
+      backgroundColor: this.props.blackFrameOn ? "black" : "white",
+      height: 250,
+      width: 200,
+      padding: 25,
+    }
+
     return (
       <div className="image-view">
         <div className="dropzone">
          <Dropzone
-              accept="image/jpeg, image/jpg, image/png"
-              onDrop={ this.onDrop }
+            accept="image/jpeg, image/jpg, image/png"
+            onDrop={this.props.onDrop}
+            style={frameStyle}
           >
-          <img className="selected-image" src={this.state.image} alt="Selected"/>
+          <img className="selected-image" src={this.props.image} alt="Selected"/>
           </Dropzone>
         </div>
       </div>
