@@ -23,6 +23,12 @@
   font-family: 'Raleway', sans-serif;
 }
 
+.footer-text {
+  font-family: 'Raleway', sans-serif;
+  background-color: #daf0ee;
+  margin-top: 50px;
+}
+
 .toggle {
   padding-top: 10px;
   margin: auto;

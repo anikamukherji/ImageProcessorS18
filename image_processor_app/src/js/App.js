@@ -3,7 +3,9 @@ import '../css/App.css';
 import ImageView from './ImageView';
 import ButtonView from './ButtonView';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Toggle from 'material-ui/Toggle';
+import TextField from 'material-ui/TextField';
 import DefaultImage from '../images/default.jpg';
 
 class App extends Component {
@@ -11,6 +13,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
+      currUser: null,
       imageUploaded: false,
       imageName: null,
       image: DefaultImage,
@@ -18,6 +21,12 @@ class App extends Component {
       userPressedButton: true,
       buttonIndexSelected: null,
     }
+  }
+
+  handleChange = event => {
+    this.setState({
+      currUser: event.target.value
+    });
   }
 
   onDrop = files => {
@@ -50,9 +59,15 @@ class App extends Component {
           <h1 className="App-title">Image Processor</h1>
         </header>
 
-        <p className="basic-text"> Click on the image to upload your own </p>
+        <MuiThemeProvider muiTheme={muiTheme}>
 
-        <MuiThemeProvider>
+        <TextField
+            hintText="Username"
+            onChange={this.handleChange} 
+            underlineFocusStyle={{borderColor: '#440014'}}
+        />
+
+        <p className="basic-text"> Click on the image on the left to upload your own </p>
 
         <div className="image-container">
           <ImageView image={this.state.image} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>
@@ -62,25 +77,24 @@ class App extends Component {
             <Toggle
               label="Black Frame"
               labelPosition="right"
-              labelStyle={toggleStyle.toggle}
-              onToggle={this.onFrameToggle}
             />
           </div>
 
         <ButtonView onClickParentCallback={this.onClick}/>
         </MuiThemeProvider>
 
-        <p className="basic-text"> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
+        <p className="footer-text"> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
       </div>
     );
   }
 }
 
-const toggleStyle = {
+const muiTheme = getMuiTheme({
   toggle: {
-    marginBottom: 16,
+    thumbOnColor: '#440014',
+    trackOnColor: '#daf0ee',
     fontFamily: 'Raleway, sans-serif',
   },
-}
+});
 
 export default App;
