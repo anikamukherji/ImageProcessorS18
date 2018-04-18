@@ -3,8 +3,8 @@
 }
 
 .App-header {
-  background-color: white;
-  height: 150px;
+  background-color: #daf0ee;
+  height: 100px;
   padding: 20px;
   color: black;
   margin: auto;
@@ -16,7 +16,7 @@
 }
 
 .image-container {
-  padding-bottom: 100px;
+  padding-bottom: 10px;
 }
 
 .basic-text {
@@ -24,7 +24,7 @@
 }
 
 .toggle {
-  padding-top: 100px;
+  padding-top: 10px;
   margin: auto;
   width: 10%;
 }

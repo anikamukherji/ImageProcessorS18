@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../css/App.css';
 import ImageView from './ImageView';
+import ButtonView from './ButtonView';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Toggle from 'material-ui/Toggle';
 import DefaultImage from '../images/default.jpg';
@@ -14,6 +15,8 @@ class App extends Component {
       imageName: null,
       image: DefaultImage,
       blackFrameOn: false,
+      userPressedButton: true,
+      buttonIndexSelected: null,
     }
   }
 
@@ -33,6 +36,13 @@ class App extends Component {
       });
   }
 
+  onClick = index => {
+    this.setState({
+      buttonIndexSelected: index,
+      userPressedButton: true,
+    }) 
+  }
+
   render() {
     return (
       <div className="App">
@@ -45,7 +55,7 @@ class App extends Component {
         <MuiThemeProvider>
 
         <div className="image-container">
-          <ImageView image={this.state.image} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn}/>
+          <ImageView image={this.state.image} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>
         </div>
 
           <div className="toggle">
@@ -56,6 +66,8 @@ class App extends Component {
               onToggle={this.onFrameToggle}
             />
           </div>
+
+        <ButtonView onClickParentCallback={this.onClick}/>
         </MuiThemeProvider>
 
         <p className="basic-text"> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
