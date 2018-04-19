@@ -43,7 +43,6 @@ class App extends Component {
       this.setState({
         blackFrameOn: !this.state.blackFrameOn,
       });
-    console.log("toggle switched")
   }
 
   onClick = index => {
