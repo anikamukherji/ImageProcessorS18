@@ -37,6 +37,16 @@ class App extends Component {
         image: files[0].preview,
       });
     }
+    this.prepFile(files[0]);
+  }
+
+  prepFile = file => {
+    const reader = new FileReader();
+    reader.onabort = () => console.log('file reading was aborted');
+    reader.onerror = () => console.log('file reading has failed');
+    reader.readAsDataURL(file);
+    // base64 image stored in reader.result
+    console.log(reader)
   }
 
   onFrameToggle = () => {
