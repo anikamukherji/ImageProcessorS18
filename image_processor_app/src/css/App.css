@@ -3,8 +3,8 @@
 }
 
 .App-header {
-  background-color: white;
-  height: 150px;
+  background-color: #daf0ee;
+  height: 100px;
   padding: 20px;
   color: black;
   margin: auto;
@@ -16,15 +16,21 @@
 }
 
 .image-container {
-  padding-bottom: 100px;
+  padding-bottom: 10px;
 }
 
 .basic-text {
   font-family: 'Raleway', sans-serif;
 }
 
+.footer-text {
+  font-family: 'Raleway', sans-serif;
+  background-color: #daf0ee;
+  margin-top: 50px;
+}
+
 .toggle {
-  padding-top: 100px;
+  padding-top: 10px;
   margin: auto;
   width: 10%;
 }
