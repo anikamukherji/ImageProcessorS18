@@ -17,6 +17,7 @@ class App extends Component {
       imageUploaded: false,
       imageName: null,
       image: DefaultImage,
+      currentImageString: null,
       blackFrameOn: false,
       userPressedButton: true,
       buttonIndexSelected: null,
@@ -24,38 +25,52 @@ class App extends Component {
   }
 
   handleChange = event => {
+    // handler for username textbox
     this.setState({
       currUser: event.target.value
     });
   }
 
   onDrop = files => {
+    // handler for DropZone upload to update state
     if (files.length > 0) {
+      var file = files[0]
       this.setState({
         imageUploaded: true,
-        imageName: files[0].name,
-        image: files[0].preview,
+        imageName: file.name,
+        image: file.preview,
       });
+      this.prepFile(file);
     }
-    this.prepFile(files[0]);
+  }
+
+  userDict = () => {
+    var dict = 
+      {"curr_user": this.state.currUser,
+        "image_uploaded": this.state.currentImageString,
+        "time_stamp": Date.now(),
+      }
+    return dict
   }
 
   prepFile = file => {
+    // convert image to base64 and save in state
     const reader = new FileReader();
-    reader.onabort = () => console.log('file reading was aborted');
-    reader.onerror = () => console.log('file reading has failed');
     reader.readAsDataURL(file);
-    // base64 image stored in reader.result
-    console.log(reader)
+		reader.onloadend = () => {
+			this.setState({currentImageString: reader.result});
+		}
   }
 
   onFrameToggle = () => {
+    // switch between white and  black frame
       this.setState({
         blackFrameOn: !this.state.blackFrameOn,
       });
   }
 
   onClick = index => {
+    // keep track of what button has been pressed
     this.setState({
       buttonIndexSelected: index,
       userPressedButton: true,
