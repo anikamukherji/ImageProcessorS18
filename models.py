@@ -11,7 +11,7 @@ class User(MongoModel):
 	contrast_time = fields.ListField(field=fields.DateTimeField())
 	log_times = fields.ListField(field=fields.DateTimeField())
 	reverse_times = fields.ListField(field=fields.DateTimeField())
-	image = fields.ListField(field=fields.ImageField())
+	image = fields.ListField(field=fields.CharField()())
 
 	class Meta:
 		write_concern = WriteConcern(j=True)
