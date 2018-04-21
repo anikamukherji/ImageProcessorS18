@@ -11,8 +11,11 @@ class User(MongoModel):
 	contrast_time = fields.ListField(field=fields.DateTimeField())
 	log_times = fields.ListField(field=fields.DateTimeField())
 	reverse_times = fields.ListField(field=fields.DateTimeField())
-	image = fields.ListField(field=fields.CharField()())
-
+	image_original = fields.ListField(field=fields.CharField()())
+	image_hist = fields.ListField(field=fields.CharField()())
+	image_contrast = fields.ListField(field=fields.CharField()())
+	image_log = fields.ListField(field=fields.CharField()())
+	image_reverse = fields.ListField(field=fields.CharField()())
 	class Meta:
 		write_concern = WriteConcern(j=True)
         	connection_alias = 'image-app'
