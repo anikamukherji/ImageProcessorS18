@@ -16,8 +16,9 @@ class App extends Component {
       currUser: null,
       imageUploaded: false,
       imageName: null,
-      image: DefaultImage,
-      currentImageString: null,
+      imageFile: DefaultImage,
+      currentImageString: DefaultImage,
+      processedImageString: DefaultImage,
       blackFrameOn: false,
       userPressedButton: true,
       buttonIndexSelected: null,
@@ -38,7 +39,7 @@ class App extends Component {
       this.setState({
         imageUploaded: true,
         imageName: file.name,
-        image: file.preview,
+        imageFile: file,
       });
       this.prepFile(file);
     }
@@ -71,6 +72,10 @@ class App extends Component {
 
   onClick = index => {
     // keep track of what button has been pressed
+    // TO DO
+    // Based on index, call specific handler to make
+    // request to server
+    // Update self.state.processedImageString based on response
     this.setState({
       buttonIndexSelected: index,
       userPressedButton: true,
@@ -95,7 +100,7 @@ class App extends Component {
         <p className="basic-text"> Click on the image on the left to upload your own </p>
 
         <div className="image-container">
-          <ImageView image={this.state.image} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>
+          <ImageView imageString={this.state.currentImageString} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>
         </div>
 
           <div className="toggle">
