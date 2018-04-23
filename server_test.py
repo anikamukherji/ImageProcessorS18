@@ -14,6 +14,7 @@ import  PIL
 from user import create_user,already_user, add_uploadimage, add_image_hist, add_image_contrast, add_image_log, add_image_reverse
 from models import User
 import logging
+import models
 
 app = Flask(__name__)
 CORS(app)
@@ -75,6 +76,21 @@ def image_post():
 					 datetime.datetime.now())
 	logging.debug("adding new image to user: {}".format(u_vals))
 	return jsonify(u_vals),200
+
+@app.route("/api/<user_email>", methods=["GET"])
+def get_image(user_email):
+	"""
+	Get the user with the whole info
+
+	:return: json dict of user values
+	:rtype: Request
+	"""
+	user = models.User.objects.raw({"_id": user_email}).first()
+	u_values = {"user_name": user.email,
+		    "upload_image": user.image_original,
+		    "upload_time": user.upload_time
+		   }
+	return jsonify(u_values),200
 
 if __name__ == "__main__":
     app.run()
