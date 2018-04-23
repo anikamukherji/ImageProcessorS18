@@ -16,7 +16,9 @@ class App extends Component {
       currUser: null,
       imageUploaded: false,
       imageName: null,
-      image: DefaultImage,
+      imageFile: DefaultImage,
+      currentImageString: DefaultImage,
+      processedImageString: DefaultImage,
       blackFrameOn: false,
       userPressedButton: true,
       buttonIndexSelected: null,
@@ -24,28 +26,56 @@ class App extends Component {
   }
 
   handleChange = event => {
+    // handler for username textbox
     this.setState({
       currUser: event.target.value
     });
   }
 
   onDrop = files => {
+    // handler for DropZone upload to update state
     if (files.length > 0) {
+      var file = files[0]
       this.setState({
         imageUploaded: true,
-        imageName: files[0].name,
-        image: files[0].preview,
+        imageName: file.name,
+        imageFile: file,
       });
+      this.prepFile(file);
     }
   }
 
+  userDict = () => {
+    var dict = 
+      {"curr_user": this.state.currUser,
+        "image_uploaded": this.state.currentImageString,
+        "time_stamp": Date.now(),
+      }
+    return dict
+  }
+
+  prepFile = file => {
+    // convert image to base64 and save in state
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+		reader.onloadend = () => {
+			this.setState({currentImageString: reader.result});
+		}
+  }
+
   onFrameToggle = () => {
+    // switch between white and  black frame
       this.setState({
         blackFrameOn: !this.state.blackFrameOn,
       });
   }
 
   onClick = index => {
+    // keep track of what button has been pressed
+    // TO DO
+    // Based on index, call specific handler to make
+    // request to server
+    // Update self.state.processedImageString based on response
     this.setState({
       buttonIndexSelected: index,
       userPressedButton: true,
@@ -70,7 +100,7 @@ class App extends Component {
         <p className="basic-text"> Click on the image on the left to upload your own </p>
 
         <div className="image-container">
-          <ImageView image={this.state.image} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>
+          <ImageView imageString={this.state.currentImageString} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>
         </div>
 
           <div className="toggle">

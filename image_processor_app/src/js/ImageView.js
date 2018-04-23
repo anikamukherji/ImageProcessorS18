@@ -8,7 +8,7 @@ class ImageView extends Component {
     
     if (this.props.userHasProcessedImage) {
       return (
-        <img className="selected-image" src={this.props.image} alt="Selected"/>
+        <img className="selected-image" src={this.props.imageString} alt="None Selected"/>
       ) 
     }
   }
@@ -17,23 +17,26 @@ class ImageView extends Component {
 
     var frameStyle = {
       backgroundColor: this.props.blackFrameOn ? "black" : "white",
-      height: 250,
-      padding: 25,
+      margin: 25,
     }
 
     return (
-      <div className="image-view" style={frameStyle}>
-        <div className="dropzone">
-         <Dropzone
-            accept="image/jpeg, image/jpg, image/png"
-            onDrop={this.props.onDrop}
-            style={{ backgroundColor: "clear" }}
-          >
-          <img className="selected-image" src={this.props.image} alt="Selected"/>
-          </Dropzone>
+      <div className="image-view">
+        <div style={frameStyle}>
+          <div className="dropzone">
+           <Dropzone
+              accept="image/jpeg, image/jpg, image/png"
+              onDrop={this.props.onDrop}
+              style={{ backgroundColor: "clear" }}
+            >
+            <img className="selected-image" src={this.props.imageString} alt="None Selected"/>
+            </Dropzone>
+          </div>
         </div>
-        <div className="dropzone">
-          {this.renderProcessedImage()}
+        <div style={frameStyle}>
+          <div className="dropzone">
+            {this.renderProcessedImage()}
+          </div>
         </div>
       </div>
     );
