@@ -28,6 +28,8 @@ class User(MongoModel):
 		"user_upload_iamge": self.image_original,
 		"hist_times": self.hist_times,
 		"contrast_times": self.contrast_times,
-		"log_times": self.log_times
+		"log_times": self.log_times,
+		"reverse_times": self.reverse_times,
+		"upload_time": self.upload_time
 		}
 		return vals

@@ -62,17 +62,17 @@ def image_post():
 		logging.warning("Incorrect JSON input:{}".format(e))
 		err = {"error": "Incorrect JSON input"}
 		return jsonify(err),400
-	# except AssertionError as e:
-	#	logging.warning("Incorrect image type given: {}".format(e))
- 	#	err = {"error": "Incorrect image type given"}
- 	#	return jsonify(err), 400
+	except AssertionError as e:
+		logging.warning("Incorrect image type given: {}".format(e))
+		err = {"error": "Incorrect image type given"}
+		return jsonify(err), 400
 	if already_user(email):
-		u_vals = add_uploadimage(email, image = image_new, 
-					 time=datetime.datetime.now())
+		u_vals = add_uploadimage(email,image_new, 
+					 datetime.datetime.now())
 	else:
 		u_vals = create_user(email)
-		u_vals = add_uploadimage(email, image = image_new,
-					 time=datetime.datetime.now())
+		u_vals = add_uploadimage(email, image_new,
+					 datetime.datetime.now())
 	logging.debug("adding new image to user: {}".format(u_vals))
 	return jsonify(u_vals),200
 
