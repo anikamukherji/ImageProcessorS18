@@ -15,6 +15,17 @@ def add_uploadimage(email,image,time):
 	user.upload_time.append(time)
 	user.save()
 
+def already_user(email):
+"""
+	Return whether user has already been created
+
+	:param email: email of user
+	:type email: string
+	:returns: if user with email already exists
+	:rtype: boolean
+"""
+	return models.User.objects.raw({"_id": email}).count()>0
+
 def add_image_hist(email,image,time):
 """
         store the information about the processed image which is using hist
