@@ -5,7 +5,7 @@ import datetime
 def create_user(email):
 	user = models.User(email,hist_times=0,contrast_times=0,log_times=0,reverse_times=0)
 	user.save()
-	return u.vals()
+	return user.vals()
 
 def add_uploadimage(email,image,time):
 	"""

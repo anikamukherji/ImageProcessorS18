@@ -19,7 +19,29 @@ app = Flask(__name__)
 CORS(app)
 connect("mongodb://vcm-3551.vm.duke.edu:27017/image-app")  # open up connection to db  ????
 
+@app.route("/api/new_user",methods=["POST"])
+def user_post():
+	"""
+	Posts new user
 
+	:return: json dict of new user initial info
+	:rtype: Request
+	:return: 4xx error with json error dict if missing key
+		 or incorrect type given
+	"""
+	r = request.get_json()
+	try:
+                email = r["user_email"]
+	except KeyError as e:
+                logging.warning("Incorrect JSON input:{}".format(e))
+                err = {"error": "Incorrect JSON input"}
+                return jsonify(err),400
+	if already_user(email):
+		u_vals = {"warning":"This user_name is already existed"}
+	else:
+		u_vals = create_user(email)
+	return jsonify(u_vals),200
+	
 @app.route("/api/histogram_equalization", methods=["POST"])
 def image_post():
 	"""
