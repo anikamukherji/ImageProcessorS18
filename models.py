@@ -9,26 +9,25 @@ class User(MongoModel):
 	upload_time = fields.ListField(field=fields.DateTimeField())
 	hist_time = fields.ListField(field=fields.DateTimeField())
 	contrast_time = fields.ListField(field=fields.DateTimeField())
-	log_times = fields.ListField(field=fields.DateTimeField())
-	reverse_times = fields.ListField(field=fields.DateTimeField())
-	image_original = fields.ListField(field=fields.CharField()())
-	image_hist = fields.ListField(field=fields.CharField()())
-	image_contrast = fields.ListField(field=fields.CharField()())
-	image_log = fields.ListField(field=fields.CharField()())
-	image_reverse = fields.ListField(field=fields.CharField()())
-	class Meta:
-		write_concern = WriteConcern(j=True)
-        	connection_alias = 'image-app'
+	log_time = fields.ListField(field=fields.DateTimeField())
+	reverse_time = fields.ListField(field=fields.DateTimeField())
+	image_original = fields.ListField(field=fields.CharField())
+	image_hist = fields.ListField(field=fields.CharField())
+	image_contrast = fields.ListField(field=fields.CharField())
+	image_log = fields.ListField(field=fields.CharField())
+	image_reverse = fields.ListField(field=fields.CharField())
 
 	def vals(self):
-        """
-        Returns dictionary of attributes for object
-        :return: dictionary of attributes
-        :rtype: dict
-        """
-        	vals = {
-            	"user_email": self.email,
-            	"user_upload_iamge": self.image_original,
-            	"hist_times": self.hist_times
-            	}
+		"""
+        	Returns dictionary of attributes for object
+        	:return: dictionary of attributes
+        	:rtype: dict
+		"""
+		vals = {
+		"user_email": self.email,
+		"user_upload_iamge": self.image_original,
+		"hist_times": self.hist_times,
+		"contrast_times": self.contrast_times,
+		"log_times": self.log_times
+		}
 		return vals
