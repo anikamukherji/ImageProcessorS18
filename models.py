@@ -19,3 +19,16 @@ class User(MongoModel):
 	class Meta:
 		write_concern = WriteConcern(j=True)
         	connection_alias = 'image-app'
+
+	def vals(self):
+        """
+        Returns dictionary of attributes for object
+        :return: dictionary of attributes
+        :rtype: dict
+        """
+        	vals = {
+            	"user_email": self.email,
+            	"user_upload_iamge": self.image_original,
+            	"hist_times": self.hist_times
+            	}
+		return vals
