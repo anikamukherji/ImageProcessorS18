@@ -43,7 +43,7 @@ def user_post():
 		u_vals = create_user(email)
 	return jsonify(u_vals),200
 	
-@app.route("/api/histogram_equalization", methods=["POST"])
+@app.route("/api/upload", methods=["POST"])
 def image_post():
 	"""
 	Posts new user with given image 
@@ -85,12 +85,16 @@ def get_image(user_email):
 	:return: json dict of user values
 	:rtype: Request
 	"""
-	user = models.User.objects.raw({"_id": user_email}).first()
-	u_values = {"user_name": user.email,
-		    "upload_image": user.image_original,
-		    "upload_time": user.upload_time
-		   }
-	return jsonify(u_values),200
+	if already_user(user_email):
+		user = models.User.objects.raw({"_id": user_email}).first()
+		u_values = {"user_name": user.email,
+		    	    "upload_image": user.image_original,
+		    	    "upload_time": user.upload_time
+		   	   }	
+		return jsonify(u_values),200
+	else:
+		u_values ={"warning": "This user does not exist"}
+		return jsonify(u_values),200
 
 if __name__ == "__main__":
     app.run()
