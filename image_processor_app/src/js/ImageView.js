@@ -22,15 +22,6 @@ class ImageView extends Component {
     }
   }
 
-  getImgSize = id => {
-    var pic = document.getElementById(id);
-    console.log(id)
-    //var h = pic.naturalHeight;
-    //var w = pic.offsetWidth;
-    //console.log(h) 
-    //console.log(w) 
-  }
-
   render() {
 
     var frameStyle = {
@@ -48,7 +39,6 @@ class ImageView extends Component {
               style={{ backgroundColor: "clear" }}
             >
             <img className="selected-image" id='selImg' src={this.props.imageString} alt="None Selected"/>
-            {this.getImgSize('selImg')}
             </Dropzone>
           </div>
         </div>
