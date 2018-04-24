@@ -1,0 +1,23 @@
+.container {
+}
+
+.image-container {
+  padding-bottom: 10px;
+}
+
+.basic-text {
+  font-family: 'Raleway', sans-serif;
+}
+
+.footer-text {
+  font-family: 'Raleway', sans-serif;
+  background-color: #daf0ee;
+  margin-top: 50px;
+}
+
+.toggle {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  margin: auto;
+  width: 18%;
+}
