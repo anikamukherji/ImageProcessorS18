@@ -6,21 +6,47 @@ import '../css/LoginScreen.css';
 
 class LoginScreen extends Component {
 
-  render() {
+  renderWarning = () => {
+    if (this.props.showTakenUserLabel) {
+      return (
+        <p className="taken-user-label">Username is Taken: Please Choose Another </p>
+      )
+    }
+  }
 
+  render() {
     return (
 
     <div className="container">
       <MuiThemeProvider>
-        <TextField
-            hintText="Username"
-            onChange={this.props.textHandler} 
-            underlineFocusStyle={{borderColor: '#440014'}}
-        />
-        <RaisedButton 
-            label="Login"
-            style = {{ margin: '15px' }}
-        />
+        <div className="content">
+          <TextField
+              hintText="Username"
+              onChange={this.props.textHandler} 
+              underlineFocusStyle={{borderColor: '#440014'}}
+          />
+
+          {this.renderWarning()}
+
+          <div className="buttons">
+            <RaisedButton 
+                label="Login as New User"
+                style= {{ margin: '15px' }}
+                onClick= {this.props.newUserHandler}
+            />
+            <RaisedButton 
+                label="Login as Existing User"
+                style= {{ margin: '15px' }}
+                onClick= {this.props.loginHandler}
+            />
+            <RaisedButton 
+                label="Login as Visitor"
+                style= {{ margin: '15px' }}
+                onClick= {this.props.visitorHandler}
+            />
+          </div>
+
+        </div>
       </MuiThemeProvider>
     </div>
     );

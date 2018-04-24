@@ -80,10 +80,6 @@ class ImageProcessor extends Component {
   render() {
     return (
       <div className="container">
-        <header className="App-header">
-          <h1 className="App-title">Image Processor</h1>
-        </header>
-
         <MuiThemeProvider muiTheme={muiTheme}>
           <p className="basic-text"> Click on the image on the left to upload your own </p>
           <div className="image-container">

@@ -1,2 +1,16 @@
 .App {
+  text-align: center;
+}
+
+.App-title {
+  font-size: 2em;
+  font-family: 'Raleway', sans-serif;
+}
+
+.App-header {
+  background-color: #daf0ee;
+  height: 100px;
+  padding: 20px;
+  color: black;
+  margin: auto;
 }
