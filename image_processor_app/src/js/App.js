@@ -20,7 +20,7 @@ class App extends Component {
       currentImageString: DefaultImage,
       processedImageString: DefaultImage,
       blackFrameOn: false,
-      userPressedButton: true,
+      userPressedButton: false,
       buttonIndexSelected: null,
     }
   }
@@ -58,8 +58,11 @@ class App extends Component {
     // convert image to base64 and save in state
     const reader = new FileReader();
     reader.readAsDataURL(file);
+    console.log(file.naturalHeight)
 		reader.onloadend = () => {
-			this.setState({currentImageString: reader.result});
+			this.setState({
+        currentImageString: reader.result
+      });
 		}
   }
 
@@ -106,8 +109,8 @@ class App extends Component {
           <div className="toggle">
             <Toggle
               label="Black Frame"
-              labelPosition="right"
               onToggle={this.onFrameToggle}
+              labelStyle={{ fontFamily: 'Raleway, sans-serif' }}
             />
           </div>
 
@@ -124,7 +127,6 @@ const muiTheme = getMuiTheme({
   toggle: {
     thumbOnColor: '#440014',
     trackOnColor: '#daf0ee',
-    fontFamily: 'Raleway, sans-serif',
   },
 });
 
