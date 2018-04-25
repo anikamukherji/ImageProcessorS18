@@ -1,4 +1,4 @@
-def histogram_equalization(id1,id2):
+def reverse_video(id1,id2):
     """
         Strip the prefix of the base64string
 
@@ -14,7 +14,6 @@ def histogram_equalization(id1,id2):
         from PIL import Image
         import numpy as np
         from skimage import exposure
-        import os
         from skimage import util
         import logging
         import uuid
@@ -31,24 +30,20 @@ def histogram_equalization(id1,id2):
         logging.debug("The image file does not exist")
         raise NameError
 
-
     try:
         assert len(i.shape) == 3            # Ensure the shape of the image array is right
     except AssertionError:
         logging.debug("The shape of image array is 3 layers")
         print("image numpy array is not in the right shape")
 
-    i_histogram1 = exposure.equalize_hist(i[:, :, 0])   #Conduct the histogram equalization for each layer of the image
-    i_histogram2 = exposure.equalize_hist(i[:, :, 1])
-    i_histogram3 = exposure.equalize_hist(i[:, :, 2])
-    i_histogram = np.dstack((i_histogram1, i_histogram2, i_histogram3))
-    ima = Image.fromarray(np.uint8(i_histogram * 255))  #Rescale the numpy array to convert the data type to uint8
-    (w , h) = ima.size                                  #Get the size of the image
+    i_invert = util.invert(i)
+    ima = Image.fromarray(i_invert)
+    (w, h) = ima.size                   # Get the size of the image
 
-    ima.save(id2)                       #save the processed image as a jpg file on the VCM
-    a2 = str(encode_image(id2))         #Generate the base64 string for the processed image
+    ima.save(id2)                       # Save the processed image as a jpg file on the VCM
+    a2 = str(encode_image(id2))         # Generate the base64 string for the processed image
 
-    processed_image = {'base64': a2, 'image_size': (w , h)}
+    processed_image = {'base64': a2, 'image_size': (w, h)}
     logging.info("function run as expected")
 
     return processed_image

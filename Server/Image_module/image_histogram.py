@@ -23,7 +23,11 @@ def histogram(id1):
         logging.basicConfig(filename='encode_image.log', level=logging.DEBUG,
                             filemode='w')
 
-    prefix = 'histogram'
+    if id1.find('png') == -1:       # Ensure that the input image is a png file
+        logging.error('This histogram function does not support the')
+        raise TypeError('TypeError with the input image')
+
+    prefix = 'histogram_'
     id1_histogram = prefix + id1
 
     img = mpimg.imread(id1)
@@ -31,11 +35,12 @@ def histogram(id1):
     plt.hist(lum_img.ravel(), bins=256, range=(0.0, 1.0), fc='k', ec='k')
     plt.xlabel("pixel intensity")
     plt.ylabel("number of pixel")
-    plt.savefig(id1_histogram)      #Store the histogram as an png image on the VCM for later encoding
+    plt.savefig(id1_histogram)      # Store the histogram as an png image on the VCM for later encoding
 
     a1_histogram = str(encode_image(id1_histogram)) #Encode the histogram image into base64 data
 
-    os.remove(id1)                  #Remove the image file stored on the vcm
-    os.remove(id1_histogram)        #Remove the image histogram stored on the vcm
+    os.remove(id1)                  # Remove the image file stored on the vcm
+    os.remove(id1_histogram)        # Remove the image histogram stored on the vcm
+    logging.info("function run as expected")
 
     return a1_histogram
