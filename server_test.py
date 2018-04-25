@@ -68,12 +68,10 @@ def image_post():
 		err = {"error": "Incorrect image type given"}
 		return jsonify(err), 400
 	if already_user(email):
-		u_vals = add_uploadimage(email,image_new, 
-					 datetime.datetime.now())
+		u_vals = add_uploadimage(email,image_new, datetime.datetime.now())
 	else:
 		u_vals = create_user(email)
-		u_vals = add_uploadimage(email, image_new,
-					 datetime.datetime.now())
+		u_vals = add_uploadimage(email, image_new, datetime.datetime.now())
 	logging.debug("adding new image to user: {}".format(u_vals))
 	return jsonify(u_vals),200
 
@@ -95,6 +93,45 @@ def get_image(user_email):
 	else:
 		u_values ={"warning": "This user does not exist"}
 		return jsonify(u_values),200
+
+@app.route("/api/histogram", methods=["POST"])
+def histogram_processed(user_email):
+	"""
+	Get the processed image with histogram
+
+	:return: json dict of image
+	:rtype: Request
+	"""
+	r = request.get_json()
+	try:
+		email = r["user_email"]
+		image_new = r["image"]
+		assert type(image_new) is str
+	except KeyError as e:
+		logging.warning("Incorrect JSON input: {}".format(e))
+		err = {"error": "Incorrect JSON input"}
+		return jsonify(err),400
+	except AsserionError as e:
+		logging.warning("Incorrect image type given: {}".format(e))
+		err = {"error": "Incorrect image type given"}
+		return jsonify(err),400
+	string_to_use = strip_image(image_new)
+	id1 = str(uuid.uuid4())
+	suffix = ".png"
+	id1 = id1 + suffix
+	id2 = str(uuid.uuid4())
+	id2 = id2 + suffix 
+	decode_image_string(image_new, id1)
+	processed_image = histogram_equalization(id1,id2)
+	histogram_ori = histogram(id1)
+	histogram_pro = histogram(id2)
+	return_image = processed_image.update({"histogram_original": histogram_ori})
+	return_image = return_image.update({"histogram_processed": histogram_pro})
+	return jsonify(return_image),200
+
+	
+
+
 
 if __name__ == "__main__":
     app.run()
