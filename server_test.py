@@ -15,6 +15,7 @@ from user import create_user,already_user, add_uploadimage, add_image_hist, add_
 from models import User
 import logging
 import models
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -94,8 +95,9 @@ def get_image(user_email):
 		u_values ={"warning": "This user does not exist"}
 		return jsonify(u_values),200
 
+
 @app.route("/api/histogram", methods=["POST"])
-def histogram_processed(user_email):
+def histogram_processed():
 	"""
 	Get the processed image with histogram
 
@@ -114,23 +116,32 @@ def histogram_processed(user_email):
 	except AsserionError as e:
 		logging.warning("Incorrect image type given: {}".format(e))
 		err = {"error": "Incorrect image type given"}
-		return jsonify(err),400
+		return jsonify(err),400 
 	string_to_use = strip_image(image_new)
 	id1 = str(uuid.uuid4())
 	suffix = ".png"
 	id1 = id1 + suffix
 	id2 = str(uuid.uuid4())
 	id2 = id2 + suffix 
+	start_time = datetime.datetime.now()
 	decode_image_string(image_new, id1)
 	processed_image = histogram_equalization(id1,id2)
+	#processed_image = {"1": "asdfer123","2": "123"}
 	histogram_ori = histogram(id1)
+	#histogram_ori = "yz123"
 	histogram_pro = histogram(id2)
-	return_image = processed_image.update({"histogram_original": histogram_ori})
-	return_image = return_image.update({"histogram_processed": histogram_pro})
-	return jsonify(return_image),200
+	#histogram_pro = "yz398"
+	end_time = datetime.datetime.now()
+	processed_time = str(end_time-start_time)
+	processed_image["histogram_original"] = histogram_ori
+	processed_image["histogram_processed"] = histogram_pro
+	processed_image["processed_time"] = processed_time
+	processed_image["histogram_equation_times"] = num_hist
+	add_image_hist(email,id2,datetime.datetime.now())
+	return jsonify(processed_image),200
 
 @app.route("/api/contrast", methods=["POST"])
-def contrast_processed(user_email):
+def contrast_processed():
 	"""
         Get the processed image with contrast-stretching
 	:param id1: uuid of original image
@@ -162,7 +173,7 @@ def contrast_processed(user_email):
 	return jsonify(processed_image),200
 
 @app.route("/api/log", methods=["POST"])
-def log_processed(user_email):
+def log_processed():
 	"""
         Get the processed image with log_compression
 	
@@ -195,7 +206,7 @@ def log_processed(user_email):
 	return jsonify(processed_image)
 
 @app.route("/api/reverse", methods=["POST"])
-def reverse_processed(user_email):
+def reverse_processed():
 	"""
         Get the processed image with reverse_video
 
