@@ -2,7 +2,7 @@ from pymodm import connect
 import models
 import datetime
 
-def create_user(email):
+def create_user(email,image):
 	user = models.User(email,hist_times=0,contrast_times=0,log_times=0,reverse_times=0)
 	user.save()
 	return user.vals()

@@ -129,9 +129,102 @@ def histogram_processed(user_email):
 	return_image = return_image.update({"histogram_processed": histogram_pro})
 	return jsonify(return_image),200
 
+@app.route("/api/contrast", methods=["POST"])
+def histogram_processed(user_email):
+        """
+        Get the processed image with contrast-stretching
+	:param id1: uuid of original image
+	:param id2: uuid of processed image
+        :return: json dict of image
+        :rtype: Request
+        """
+        r = request.get_json()
+        try:
+                email = r["user_email"]
+                image_new = r["image"]
+                assert type(image_new) is str
+        except KeyError as e:
+                logging.warning("Incorrect JSON input: {}".format(e))
+                err = {"error": "Incorrect JSON input"}
+                return jsonify(err),400
+        except AsserionError as e:
+                logging.warning("Incorrect image type given: {}".format(e))
+                err = {"error": "Incorrect image type given"}
+                return jsonify(err),400
+        string_to_use = strip_image(image_new)
+        id1 = str(uuid.uuid4())
+        suffix = ".png"
+        id1 = id1 + suffix
+        id2 = str(uuid.uuid4())
+        id2 = id2 + suffix
+        decode_image_string(image_new, id1)
+	processed_image = contrast_stretching(id1, id2)
+	return jsonify(processed_image),200
+
+@app.route("/api/log", methods=["POST"])
+def histogram_processed(user_email):
+        """
+        Get the processed image with log_compression
 	
+	:param id1: uuid of original image
+	:param id2: uuid of processed image
+        :return: json dict of image
+        :rtype: Request
+        """
+        r = request.get_json()
+        try:
+                email = r["user_email"]
+                image_new = r["image"]
+                assert type(image_new) is str
+        except KeyError as e:
+                logging.warning("Incorrect JSON input: {}".format(e))
+                err = {"error": "Incorrect JSON input"}
+                return jsonify(err),400
+        except AsserionError as e:
+                logging.warning("Incorrect image type given: {}".format(e))
+                err = {"error": "Incorrect image type given"}
+                return jsonify(err),400
+        string_to_use = strip_image(image_new)
+        id1 = str(uuid.uuid4())
+        suffix = ".png"
+        id1 = id1 + suffix
+        id2 = str(uuid.uuid4())
+        id2 = id2 + suffix
+        decode_image_string(image_new, id1)
+	processed_iamge = log_compression(id1, id2)
+	return jsonify(processed_image)
 
+@app.route("/api/histogram", methods=["POST"])
+def histogram_processed(user_email):
+        """
+        Get the processed image with reverse_video
 
-
+	:param id1: uuid of original image
+	:param id2: uuid of processed image
+        :return: json dict of image
+        :rtype: Request
+        """
+        r = request.get_json()
+        try:
+                email = r["user_email"]
+                image_new = r["image"]
+                assert type(image_new) is str
+        except KeyError as e:
+                logging.warning("Incorrect JSON input: {}".format(e))
+                err = {"error": "Incorrect JSON input"}
+                return jsonify(err),400
+        except AsserionError as e:
+                logging.warning("Incorrect image type given: {}".format(e))
+                err = {"error": "Incorrect image type given"}
+                return jsonify(err),400
+        string_to_use = strip_image(image_new)
+        id1 = str(uuid.uuid4())
+        suffix = ".png"
+        id1 = id1 + suffix
+        id2 = str(uuid.uuid4())
+        id2 = id2 + suffix
+        decode_image_string(image_new, id1)
+	processed_image = reverse_video(id1, id2)
+	return jsonify(processed_image)
 if __name__ == "__main__":
     app.run()
