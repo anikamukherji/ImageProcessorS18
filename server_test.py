@@ -15,7 +15,6 @@ from user import create_user,already_user, add_uploadimage, add_image_hist, add_
 from models import User
 import logging
 import models
-import time
 
 app = Flask(__name__)
 CORS(app)
@@ -132,12 +131,13 @@ def histogram_processed():
 	histogram_pro = histogram(id2)
 	#histogram_pro = "yz398"
 	end_time = datetime.datetime.now()
+	#id2 = "123456"
 	processed_time = str(end_time-start_time)
+	num_hist = add_image_hist(email,id2,datetime.datetime.now())
 	processed_image["histogram_original"] = histogram_ori
 	processed_image["histogram_processed"] = histogram_pro
 	processed_image["processed_time"] = processed_time
 	processed_image["histogram_equation_times"] = num_hist
-	add_image_hist(email,id2,datetime.datetime.now())
 	return jsonify(processed_image),200
 
 @app.route("/api/contrast", methods=["POST"])
@@ -168,8 +168,18 @@ def contrast_processed():
 	id1 = id1 + suffix
 	id2 = str(uuid.uuid4())
 	id2 = id2 + suffix
+	start_time = datetime.datetime.now()
 	decode_image_string(image_new, id1)
 	processed_image = contrast_stretching(id1, id2)
+	histogram_ori = histogram(id1)
+	histogram_pro = histogram(id2)
+	end_time = datetime.datetime.now()
+	processed_time = str(end_time - start_time)
+	num_contrast = add_image_contrast(email,id2,datetime.datetime.now())
+	processed_image["histogram_original"] = histogram_ori
+	processed_image["histogram_processed"] = histogram_pro
+	processed_image["processed_time"] = processed_time
+	processed_image["contrast_streching_times"] = num_contrast
 	return jsonify(processed_image),200
 
 @app.route("/api/log", methods=["POST"])
@@ -201,8 +211,19 @@ def log_processed():
 	id1 = id1 + suffix
 	id2 = str(uuid.uuid4())
 	id2 = id2 + suffix
+	start_time = datetime.datetime.now()
 	decode_image_string(image_new, id1)
 	processed_iamge = log_compression(id1, id2)
+	end_time = datetime.datetime.now()
+	histogram_ori = histogram(id1)
+	histogram_pro = histogram(id2)
+	end_time = datetime.datetime.now()
+	processed_time = str(end_time-start_time)
+	num_log = add_image_log(email,id2,datetime.datetime.now())
+	processed_image["histogram_original"] = histogram_ori
+	processed_image["histogram_processed"] = histogram_pro
+	processed_image["processed_time"] = processed_time
+	processed_image["log_compression_times"] = num_log
 	return jsonify(processed_image)
 
 @app.route("/api/reverse", methods=["POST"])
@@ -234,8 +255,18 @@ def reverse_processed():
 	id1 = id1 + suffix
 	id2 = str(uuid.uuid4())
 	id2 = id2 + suffix
+	start_time = datetime.datetime.now()
 	decode_image_string(image_new, id1)
 	processed_image = reverse_video(id1, id2)
+	histogram_ori = histogram(id1)
+	histogram_pro = histogram(id2)
+	end_time = datetime.datetime.now()
+	processed_time = str(end_time-start_time)
+	num_reverse = add_image_reverse(email,id2,datetime.datetime.now())
+	processed_image["histogram_original"] = histogram_ori
+	processed_image["histogram_processed"] = histogram_pro
+	processed_image["processed_time"] = processed_time
+	processed_image["reverse_video_times"] = num_reverse
 	return jsonify(processed_image)
 
 if __name__ == "__main__":

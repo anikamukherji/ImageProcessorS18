@@ -45,7 +45,9 @@ def add_image_hist(email,image,time):
 	user = models.User.objects.raw({"_id": email}).first()
 	user.image_hist.append(image)
 	user.hist_time.append(time)
+	user.hist_times += 1
 	user.save()
+	return user.hist_times
 
 def add_image_contrast(email,image,time):
 	"""
@@ -54,7 +56,9 @@ def add_image_contrast(email,image,time):
 	user = models.User.objects.raw({"_id": email}).first() 
 	user.image_contrast.append(image)
 	user.contrast_time.append(time)
+	user.contrast_times += 1
 	user.save()
+	return user.contrast_times
 
 def add_image_log(email,image,time):
 	"""
@@ -63,7 +67,9 @@ def add_image_log(email,image,time):
 	user = models.User.objects.raw({"_id": email}).first() # Get the first user
 	user.image_log.append(image)
 	user.log_time.append(time)
+	user.log_times += 1
 	user.save()
+	return user.log_times
 
 def add_image_reverse(email,image,time):
 	"""
@@ -72,4 +78,6 @@ def add_image_reverse(email,image,time):
 	user = models.User.objects.raw({"_id": email}).first() # Get the first user
 	user.image_reverse.append(image)
 	user.reverse_time.append(time)
+	user.reverse_times += 1
 	user.save()
+	return user.reverse_times
