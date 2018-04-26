@@ -2,8 +2,18 @@ from pymodm import connect
 import models
 import datetime
 
-def create_user(email,image):
-	user = models.User(email,hist_times=0,contrast_times=0,log_times=0,reverse_times=0)
+def create_user(email):
+	user = models.User(email, 0, 0, 0, 0, [], [], [], [], [], [], [], [], [], [])
+	user.image_original.append("None")
+	user.image_contrast.append("None")
+	user.image_log.append("None")
+	user.image_hist.append("None")
+	user.image_reverse.append("None")
+	user.upload_time.append(datetime.datetime.now())
+	user.hist_time.append(datetime.datetime.now())
+	user.contrast_time.append(datetime.datetime.now())
+	user.log_time.append(datetime.datetime.now())
+	user.reverse_time.append(datetime.datetime.now())
 	user.save()
 	return user.vals()
 
