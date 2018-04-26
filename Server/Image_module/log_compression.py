@@ -1,13 +1,15 @@
 def log_compression(id1,id2):
     """
-        Strip the prefix of the base64string
+        Process the input image with log_compression and check the image size
 
         :param id1: the input should be the name string of the image
         :param id2: the input should be the name string of the processed image
         :raises ImportError:  if input is not a string
+        :raises NameError:: if the id1 image file does not exist
+        :raises AssertionError: if the image array does not contain three layers
 
-        :returns: a python library contains the base64 string of the processed image and the image size
-        :rtype: python library
+        :returns: a python dictionary contains the base64 string of the processed image and the image size
+        :rtype: python dictionary
         """
     try:
         import PIL
@@ -38,10 +40,10 @@ def log_compression(id1,id2):
 
     i_compression = exposure.adjust_log(i)
     ima = Image.fromarray(i_compression)
-    (w, h) = ima.size                                  # Get the size of the image
+    (w, h) = ima.size                       # Get the size of the image
 
-    ima.save(id2)                       # Save the processed image as a jpg file on the VCM
-    a2 = str(encode_image(id2))         # Generate the base64 string for the processed image
+    ima.save(id2)                           # Save the processed image as a png file on the VCM
+    a2 = str(encode_image(id2))             # Generate the base64 string for the processed image
 
     processed_image = {'base64': a2, 'image_size': (w, h)}
     logging.info("function run as expected")

@@ -4,9 +4,10 @@ def histogram(id1):
 
         :param id1: the input should be the name string of the image
         :raises ImportError:  if import is failure
+        :raises TypeError: if the input image file is not .png
 
-        :returns: return a base64 bytes of the histogram image
-        :rtype: base64 bytes
+        :returns: return a base64 string of the histogram image
+        :rtype: base64 string
         """
 
     try:
@@ -35,12 +36,13 @@ def histogram(id1):
     plt.hist(lum_img.ravel(), bins=256, range=(0.0, 1.0), fc='k', ec='k')
     plt.xlabel("pixel intensity")
     plt.ylabel("number of pixel")
-    plt.savefig(id1_histogram)      # Store the histogram as an png image on the VCM for later encoding
+    plt.savefig(id1_histogram)        # Store the histogram as an png image on the VCM for later encoding
 
-    a1_histogram = str(encode_image(id1_histogram)) #Encode the histogram image into base64 data
+    a1_histogram = str(encode_image(id1_histogram)) # Encode the histogram image into base64 data
 
-    os.remove(id1)                  # Remove the image file stored on the vcm
-    os.remove(id1_histogram)        # Remove the image histogram stored on the vcm
+    # os.remove(id1)                  # Remove the image file stored on the vcm
+    # os.remove(id1_histogram)        # Remove the image histogram stored on the vcm
+
     logging.info("function run as expected")
 
     return a1_histogram

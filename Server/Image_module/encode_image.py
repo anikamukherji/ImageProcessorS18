@@ -4,6 +4,7 @@ def encode_image(image_name):
 
         :param image_name: the input should be the name string of the image
         :raises ImportError:  if import is failure
+        :raises TypeError: if the input is not a string
 
         :returns: return a base64 bytes file
         :rtype: base64 bytes
