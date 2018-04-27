@@ -3,7 +3,7 @@ from pymodm import fields, MongoModel
 
 class User(MongoModel):
     email = fields.EmailField(primary_key=True)
-    hist_times = fields.IntegerField()  # the number of times to do histogram
+    hist_times = fields.IntegerField()
     contrast_times = fields.IntegerField()
     log_times = fields.IntegerField()
     reverse_times = fields.IntegerField()
@@ -21,16 +21,17 @@ class User(MongoModel):
     def vals(self):
         """
         Returns dictionary of attributes for object
+
         :return: dictionary of attributes
         :rtype: dict
         """
         vals = {
-            "user_email": self.email,
-            "user_upload_iamge": self.image_original,
-            "hist_times": self.hist_times,
-            "contrast_times": self.contrast_times,
-            "log_times": self.log_times,
-            "reverse_times": self.reverse_times,
-            "upload_time": self.upload_time
-            }
+                "user_email": self.email,
+                "user_upload_image": self.image_original,
+                "hist_times": self.hist_times,
+                "contrast_times": self.contrast_times,
+                "log_times": self.log_times,
+                "reverse_times": self.reverse_times,
+                "upload_time": self.upload_time
+                }
         return vals
