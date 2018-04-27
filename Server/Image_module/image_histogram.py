@@ -1,6 +1,7 @@
 def histogram(id1):
     """
-        Plot the histogram for particular image and convert that image into base64 data
+        Plot the histogram for particular image and convert
+        that image into base64 data
 
         :param id1: the input should be the name string of the image
         :raises ImportError:  if import is failure
@@ -36,12 +37,11 @@ def histogram(id1):
     plt.hist(lum_img.ravel(), bins=256, range=(0.0, 1.0), fc='k', ec='k')
     plt.xlabel("pixel intensity")
     plt.ylabel("number of pixel")
-    plt.savefig(id1_histogram)        # Store the histogram as an png image on the VCM for later encoding
+    plt.savefig(id1_histogram)    # Store the histogram
 
-    a1_histogram = str(encode_image(id1_histogram)) # Encode the histogram image into base64 data
+    a1_histogram = str(encode_image(id1_histogram))
 
-    # os.remove(id1)                  # Remove the image file stored on the vcm
-    # os.remove(id1_histogram)        # Remove the image histogram stored on the vcm
+    os.remove(id1_histogram)
 
     logging.info("function run as expected")
 

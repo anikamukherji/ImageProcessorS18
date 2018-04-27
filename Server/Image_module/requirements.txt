@@ -1,14 +1,5 @@
 scikit-image
 numpy
-time
-pymodim
 pillow
-flask
-flask_cors
-base64
-uuid
-os
-math
-datetime
-logging
 matplotlib
+pybase64

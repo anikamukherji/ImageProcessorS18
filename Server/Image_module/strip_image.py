@@ -11,7 +11,7 @@ def strip_image(base64string):
     if type(base64string) is not str:
         raise TypeError('TypeError with the input，should be a string')
 
-    index = base64string.find(',')          # Strip the base64 string until first ','
+    index = base64string.find(',')  # Strip the string until first ','
     base64string = base64string[index + 1:]
     base64bytes = base64string.encode()     # Convert the string into bytes
     return base64bytes
