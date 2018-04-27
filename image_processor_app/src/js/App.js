@@ -1,101 +1,88 @@
 import React, { Component } from 'react';
+import ImageProcessor from './ImageProcessor';
+import LoginScreen from './LoginScreen';
 import '../css/App.css';
-import ImageView from './ImageView';
-import ButtonView from './ButtonView';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import Toggle from 'material-ui/Toggle';
-import TextField from 'material-ui/TextField';
-import DefaultImage from '../images/default.jpg';
 
 class App extends Component {
 
   constructor() {
     super()
     this.state = {
+      userLoggedIn: false,
+      isVisitor: false,
       currUser: null,
-      imageUploaded: false,
-      imageName: null,
-      image: DefaultImage,
-      blackFrameOn: false,
-      userPressedButton: true,
-      buttonIndexSelected: null,
+      usernameWasTaken: false,
     }
   }
 
   handleChange = event => {
+    // handler for username textbox
     this.setState({
       currUser: event.target.value
     });
   }
 
-  onDrop = files => {
-    if (files.length > 0) {
-      this.setState({
-        imageUploaded: true,
-        imageName: files[0].name,
-        image: files[0].preview,
-      });
-    }
-  }
-
-  onFrameToggle = () => {
-      this.setState({
-        blackFrameOn: !this.state.blackFrameOn,
-      });
-  }
-
-  onClick = index => {
+  didPressLogin = event => {
+    // TO DO 
+    // call API to see if user already exists
+    // if user exists, login to imageprocesoor
+    // else require that user creates new user
     this.setState({
-      buttonIndexSelected: index,
-      userPressedButton: true,
-    }) 
+      userLoggedIn: true,
+    });
+  }
+
+  didPressNewUser = event => {
+    // TO DO 
+    // call API to see if username already taken
+    // if available, login to imageprocesoor
+    // else require that user chooses different username
+    this.setState({
+      userLoggedIn: false,
+      usernameWasTaken: true,
+    });
+  }
+
+  didLoginAsVisitor = event => {
+    this.setState({
+      currUser: null,
+      isVisitor: true,
+    });
+  }
+
+  renderContent = () => {
+    if (!this.state.userLoggedIn && !this.state.isVisitor) {
+      return (
+        <LoginScreen
+          textHandler={this.handleChange}
+          loginHandler={this.didPressLogin}
+          newUserHandler={this.didPressNewUser}
+          visitorHandler={this.didLoginAsVisitor}
+          showTakenUserLabel={this.state.usernameWasTaken}
+        />
+      )
+    } else {
+      return (
+        <ImageProcessor
+          username={this.state.currUser}
+          isVisitor={this.state.isVisitor}
+        />
+      ) 
+    }
   }
 
   render() {
     return (
       <div className="App">
+
         <header className="App-header">
           <h1 className="App-title">Image Processor</h1>
         </header>
 
-        <MuiThemeProvider muiTheme={muiTheme}>
-
-        <TextField
-            hintText="Username"
-            onChange={this.handleChange} 
-            underlineFocusStyle={{borderColor: '#440014'}}
-        />
-
-        <p className="basic-text"> Click on the image on the left to upload your own </p>
-
-        <div className="image-container">
-          <ImageView image={this.state.image} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>
-        </div>
-
-          <div className="toggle">
-            <Toggle
-              label="Black Frame"
-              labelPosition="right"
-              onToggle={this.onFrameToggle}
-            />
-          </div>
-
-        <ButtonView onClickParentCallback={this.onClick}/>
-        </MuiThemeProvider>
-
-        <p className="footer-text"> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
+        {this.renderContent()}
       </div>
     );
   }
 }
-
-const muiTheme = getMuiTheme({
-  toggle: {
-    thumbOnColor: '#440014',
-    trackOnColor: '#daf0ee',
-    fontFamily: 'Raleway, sans-serif',
-  },
-});
 
 export default App;
