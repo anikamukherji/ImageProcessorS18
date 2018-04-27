@@ -9,7 +9,6 @@ python-dateutil
 gunicorn
 flask-cors
 scikit-image
-pymodim
 pillow
 flask
 base64
