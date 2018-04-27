@@ -11,9 +11,6 @@ flask-cors
 scikit-image
 pillow
 flask
-base64
-uuid
-os
 math
 logging
 matplotlib
