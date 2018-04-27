@@ -1,3 +1,10 @@
 pymodm
 flask
+pytest
+pytest-pep8
+pytest-cov
+numpy
+requests
+python-dateutil
+gunicorn
 flask-cors
