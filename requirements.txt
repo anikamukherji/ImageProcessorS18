@@ -8,3 +8,15 @@ requests
 python-dateutil
 gunicorn
 flask-cors
+scikit-image
+time
+pymodim
+pillow
+flask
+base64
+uuid
+os
+math
+datetime
+logging
+matplotlib
