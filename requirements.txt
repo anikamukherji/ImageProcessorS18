@@ -11,6 +11,3 @@ flask-cors
 scikit-image
 pillow
 flask
-math
-logging
-matplotlib
