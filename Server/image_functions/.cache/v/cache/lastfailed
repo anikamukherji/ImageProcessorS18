@@ -1,0 +1,16 @@
+{
+  "function_test/test_contrast_stretching.py": true,
+  "function_test/test_contrast_stretching.py::test_contrast_stretching": true,
+  "function_test/test_decode_image.py": true,
+  "function_test/test_decode_image.py::test_decode_image": true,
+  "function_test/test_histogram.py": true,
+  "function_test/test_histogram.py::test_histogram": true,
+  "function_test/test_histogram_equalization.py": true,
+  "function_test/test_histogram_equalization.py::test_histogram_equalization": true,
+  "function_test/test_log_compression.py": true,
+  "function_test/test_log_compression.py::test_log_compression": true,
+  "function_test/test_reverse_video.py": true,
+  "function_test/test_reverse_video.py::test_reverse_video": true,
+  "function_test/test_strip_image.py": true,
+  "function_test/test_strip_image.py::test_strip_image": true
+}
