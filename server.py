@@ -123,7 +123,7 @@ def histogram_processed():
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
     start_time = datetime.datetime.now()
-    decode_image_string(image_new, id1)
+    decode_image(image_new, id1)
     processed_image = histogram_equalization(id1, id2)
     # processed_image = {"1": "asdfer123","2": "123"}
     histogram_ori = histogram(id1)
@@ -170,7 +170,7 @@ def contrast_processed():
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
     start_time = datetime.datetime.now()
-    decode_image_string(image_new, id1)
+    decode_image(image_new, id1)
     processed_image = contrast_stretching(id1, id2)
     histogram_ori = histogram(id1)
     histogram_pro = histogram(id2)
@@ -213,7 +213,7 @@ def log_processed():
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
     start_time = datetime.datetime.now()
-    decode_image_string(image_new, id1)
+    decode_image(image_new, id1)
     processed_iamge = log_compression(id1, id2)
     end_time = datetime.datetime.now()
     histogram_ori = histogram(id1)
@@ -257,7 +257,7 @@ def reverse_processed():
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
     start_time = datetime.datetime.now()
-    decode_image_string(image_new, id1)
+    decode_image(image_new, id1)
     processed_image = reverse_video(id1, id2)
     histogram_ori = histogram(id1)
     histogram_pro = histogram(id2)
