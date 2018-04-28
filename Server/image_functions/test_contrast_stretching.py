@@ -5,6 +5,7 @@ def test_contrast_stretching():
 
     import pytest
     from image_module.contrast_stretching import contrast_stretching
+    import PIL
     from PIL import Image
 
     test_id1 = 'test_image78374897498.png'

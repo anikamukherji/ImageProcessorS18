@@ -22,9 +22,9 @@ def reverse_video(id1, id2):
         from image_module.encode_image import encode_image
     except ImportError:
         print("Necessary imports failed")
-    else:
-        logging.basicConfig(filename='histogram_equalization.log',
-                            level=logging.DEBUG, filemode='w')
+
+    logging.basicConfig(filename='histogram_equalization.log',
+                        level=logging.DEBUG, filemode='w')
 
     try:
         i = np.asarray(PIL.Image.open(id1))  # convert into the numpy array

@@ -5,6 +5,7 @@ def test_reverse_video():
 
     import pytest
     from image_module.reverse_video import reverse_video
+    import PIL
     from PIL import Image
 
     test_id1 = 'test_image78374897498.png'

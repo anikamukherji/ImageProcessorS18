@@ -64,67 +64,67 @@
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/__init__.py": [
-    1524854142.880607,
+    1524889924.378457,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/contrast_stretching.py": [
-    1524887428.346416,
+    1524893123.7317135,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/decode_image.py": [
-    1524854142.881387,
+    1524893123.7375305,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/encode_image.py": [
-    1524854142.8822796,
+    1524893123.7412767,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/histogram_equalization.py": [
-    1524887608.0326905,
+    1524893123.7255354,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/image_histogram.py": [
-    1524887807.2943733,
+    1524893123.729612,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/log_compression.py": [
-    1524887320.8719606,
+    1524893123.733778,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/reverse_video.py": [
-    1524887777.2332125,
+    1524893123.7394724,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/image_module/strip_image.py": [
-    1524854142.889004,
+    1524889924.3832035,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/test_contrast_stretching.py": [
-    1524887428.3417425,
+    1524890947.022152,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/test_decode_image.py": [
-    1524888108.9424624,
+    1524889924.3861592,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/test_histogram.py": [
-    1524858665.4310236,
+    1524889924.3864322,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/test_histogram_equalization.py": [
-    1524888119.7919989,
+    1524890979.7975142,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/test_log_compression.py": [
-    1524888128.1249764,
+    1524890979.7939467,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/test_reverse_video.py": [
-    1524887777.2257867,
+    1524890947.0237346,
     []
   ],
   "/Users/zhiwei/Final_project/ImageProcessorS18/Server/image_functions/test_strip_image.py": [
-    1524886615.2465928,
+    1524889924.387674,
     []
   ]
 }

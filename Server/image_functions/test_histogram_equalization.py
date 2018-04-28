@@ -5,6 +5,7 @@ def test_histogram_equalization():
 
     import pytest
     from image_module.histogram_equalization import histogram_equalization
+    import PIL
     from PIL import Image
 
     test_id1 = 'test_image78374897498.png'

@@ -5,6 +5,7 @@ def test_log_compression():
 
     import pytest
     from image_module.log_compression import log_compression
+    import PIL
     from PIL import Image
 
     test_id1 = 'test_image78374897498.png'

@@ -17,9 +17,9 @@ def decode_image(base64bytes, image_name):
         import logging
     except ImportError:
         print("Necessary imports failed")
-    else:
-        logging.basicConfig(filename='decode_image_string.log',
-                            level=logging.DEBUG, filemode='w')
+
+    logging.basicConfig(filename='decode_image.log',
+                        level=logging.DEBUG, filemode='w')
 
     if type(base64bytes) is not bytes:
         logging.error('Watch out!The input should in bytes')

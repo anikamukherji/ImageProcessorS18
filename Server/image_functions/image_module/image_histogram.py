@@ -21,9 +21,8 @@ def histogram(id1):
     except ImportError:
         print("Necessary imports failed")
 
-    else:
-        logging.basicConfig(filename='encode_image.log', level=logging.DEBUG,
-                            filemode='w')
+    logging.basicConfig(filename='encode_image.log', level=logging.DEBUG,
+                        filemode='w')
 
     if id1.find('png') == -1:       # Ensure that the input image is a png file
         logging.error('This histogram function does not support the')

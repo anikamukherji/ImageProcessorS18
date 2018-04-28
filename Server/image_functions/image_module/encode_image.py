@@ -16,9 +16,8 @@ def encode_image(image_name):
     except ImportError:
         print("Necessary imports failed")
 
-    else:
-        logging.basicConfig(filename='encode_image.log', level=logging.DEBUG,
-                            filemode='w')
+    logging.basicConfig(filename='encode_image.log', level=logging.DEBUG,
+                        filemode='w')
 
     if type(image_name) is not str:
         logging.error('Watch out!The input should be string')
