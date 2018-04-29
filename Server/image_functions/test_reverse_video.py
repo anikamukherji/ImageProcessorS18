@@ -11,7 +11,7 @@ def test_reverse_video():
     test_id1 = 'test_image78374897498.png'
     test_id2 = 'test_image898490384903.png'
     test_id3 = 'test.png'
-    ima = Image.open('test.png')
+    ima = Image.open(test_id3)
     (w, h) = ima.size
 
     with pytest.raises(FileNotFoundError):
