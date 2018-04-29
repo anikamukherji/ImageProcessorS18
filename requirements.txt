@@ -9,7 +9,7 @@ python-dateutil
 gunicorn
 flask-cors
 scikit-image
-pillow
+pillow==5.0.0
 matplotlib
 pybase64
 

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import ImageProcessor from './ImageProcessor';
 import LoginScreen from './LoginScreen';
+import axios from 'axios';
 import '../css/App.css';
+
+//var hostName = "http://vcm-3576.vm.duke.edu:5000/"
+var hostName = "http://127.0.0.1:5000/"
 
 class App extends Component {
 
@@ -37,10 +41,13 @@ class App extends Component {
     // call API to see if username already taken
     // if available, login to imageprocesoor
     // else require that user chooses different username
-    this.setState({
-      userLoggedIn: false,
-      usernameWasTaken: true,
-    });
+    var requestURL = hostName + "api/user_exists/" + this.state.currUser
+    axios.get(requestURL).then( response => { 
+      this.setState({
+        userLoggedIn: !response.data,
+        usernameWasTaken: response.data,
+      });
+    }); 
   }
 
   didLoginAsVisitor = event => {
