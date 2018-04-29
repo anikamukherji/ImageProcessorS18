@@ -8,3 +8,8 @@ requests
 python-dateutil
 gunicorn
 flask-cors
+scikit-image
+pillow
+matplotlib
+pybase64
+
