@@ -13,8 +13,8 @@ def encode_image(image_name):
     try:
         import base64
         import logging
-    except ImportError:
-        print("Necessary imports failed")
+    except ImportError as e:
+        print("Necessary imports failed: {}".format(e))
         return
 
     logging.basicConfig(filename='encode_image.log', level=logging.DEBUG,
@@ -26,6 +26,7 @@ def encode_image(image_name):
 
     with open(image_name, 'rb') as image_file:
         image_string = base64.b64encode(image_file.read())
-        logging.info("function run as expected")
+        print(image_string[:100])
+        logging.info("Image file {} being read".format(image_name))
 
     return image_string

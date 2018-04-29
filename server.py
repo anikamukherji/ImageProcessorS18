@@ -16,6 +16,14 @@ from user import add_image_contrast, add_image_log, add_image_reverse
 from models import User
 import logging
 import models
+from Server.image_functions.image_module.decode_image import *
+from Server.image_functions.image_module.encode_image import *
+from Server.image_functions.image_module.histogram_equalization import *
+from Server.image_functions.image_module.image_histogram import *
+from Server.image_functions.image_module.log_compression import *
+from Server.image_functions.image_module.reverse_video import *
+from Server.image_functions.image_module.contrast_stretching import *
+from Server.image_functions.image_module.strip_image import *
 
 app = Flask(__name__)
 CORS(app)
@@ -32,7 +40,6 @@ def user_exists(username):
              or incorrect type given
     """
     user_exists = already_user(username)
-    print("Username already exists: {}".format(user_exists))
     return jsonify(user_exists), 200
 
 
@@ -110,8 +117,8 @@ def get_user(username):
         return jsonify(u_values), 200
 
 
-@app.route("/api/histogram_equation", methods=["POST"])
-def histogram_processed():
+@app.route("/api/histogram_equalization", methods=["POST"])
+def histogram_equalization_processing():
     """
     Get the processed image with histogram
     :return: json dict of image
@@ -120,39 +127,49 @@ def histogram_processed():
     r = request.get_json()
     try:
         username = r["username"]
-        image_new = r["image"]
-        assert type(image_new) is str
+        image = r["image"]
+        assert type(image) == str
     except KeyError as e:
         logging.warning("Incorrect JSON input: {}".format(e))
         err = {"error": "Incorrect JSON input"}
         return jsonify(err), 400
-    except AsserionError as e:
+    except AssertionError as e:
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    string_to_use = strip_image(image_new)
-    id1 = str(uuid.uuid4())
+    stripped_image = strip_image(image)
+
     suffix = ".png"
-    id1 = id1 + suffix
-    id2 = str(uuid.uuid4())
-    id2 = id2 + suffix
+    # id1 is where the original file will be stored
+    filename1 = str(uuid.uuid4())
+    id1 = filename1 + suffix
+    # id2 is where the processed file will be stored
+    filename2 = str(uuid.uuid4())
+    id2 = filename2 + suffix
+
     start_time = datetime.datetime.now()
-    decode_image(image_new, id1)
+    decode_image(stripped_image, id1)
+    # processed_image dictionary will be returned
     processed_image = histogram_equalization(id1, id2)
-    histogram_ori = histogram(id1)
-    histogram_pro = histogram(id2)
+    histogram_original = histogram(id1)
+    histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
-    processed_time = str(end_time - start_time)
-    num_hist = add_image_hist(username, id2, datetime.datetime.now())
-    processed_image["histogram_original"] = histogram_ori
-    processed_image["histogram_processed"] = histogram_pro
-    processed_image["processed_time"] = processed_time
-    processed_image["histogram_equation_times"] = num_hist
+    process_time = str(end_time - start_time)
+
+    if username != 'Visitor':
+        num_hist = add_image_hist(username, id2, datetime.datetime.now())
+        processed_image["histogram_equalization_count"] = num_hist
+
+    processed_image["histogram_original"] = histogram_original
+    processed_image["histogram_processed"] = histogram_processed
+    processed_image["processed_time"] = process_time
+
+    print("returning processed image")
     return jsonify(processed_image), 200
 
 
-@app.route("/api/contrast", methods=["POST"])
-def contrast_processed():
+@app.route("/api/contrast_stretching", methods=["POST"])
+def contrast_stretching_processing():
     """
     Get the processed image with contrast-stretching
     :param id1: uuid of original image
@@ -169,33 +186,40 @@ def contrast_processed():
         logging.warning("Incorrect JSON input: {}".format(e))
         err = {"error": "Incorrect JSON input"}
         return jsonify(err), 400
-    except AsserionError as e:
+    except AssertionError as e:
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    string_to_use = strip_image(image_new)
+    stripped_string = strip_image(image_new)
+
     id1 = str(uuid.uuid4())
     suffix = ".png"
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
+
     start_time = datetime.datetime.now()
-    decode_image(image_new, id1)
+    decode_image(stripped_string, id1)
     processed_image = contrast_stretching(id1, id2)
-    histogram_ori = histogram(id1)
-    histogram_pro = histogram(id2)
+    histogram_original = histogram(id1)
+    histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
+
     processed_time = str(end_time - start_time)
-    num_contrast = add_image_contrast(username, id2, datetime.datetime.now())
-    processed_image["histogram_original"] = histogram_ori
-    processed_image["histogram_processed"] = histogram_pro
-    processed_image["processed_time"] = processed_time
-    processed_image["contrast_streching_times"] = num_contrast
+
+    if username != 'Visitor':
+        num_contrast = add_image_contrast(username,
+                                          id2, datetime.datetime.now())
+        processed_image["contrast_streching_count"] = num_contrast
+
+    processed_image["histogram_original"] = histogram_original
+    processed_image["histogram_processed"] = histogram_processed
+    processed_image["process_time"] = processed_time
     return jsonify(processed_image), 200
 
 
-@app.route("/api/log", methods=["POST"])
-def log_processed():
+@app.route("/api/log_compression", methods=["POST"])
+def log_compression_processing():
     """
     Get the processed image with log_compression
     :param id1: uuid of original image
@@ -212,34 +236,40 @@ def log_processed():
         logging.warning("Incorrect JSON input: {}".format(e))
         err = {"error": "Incorrect JSON input"}
         return jsonify(err), 400
-    except AsserionError as e:
+    except AssertionError as e:
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    string_to_use = strip_image(image_new)
+    stripped_string = strip_image(image_new)
+
     id1 = str(uuid.uuid4())
     suffix = ".png"
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
+
     start_time = datetime.datetime.now()
-    decode_image(image_new, id1)
+    decode_image(stripped_string, id1)
     processed_iamge = log_compression(id1, id2)
     end_time = datetime.datetime.now()
-    histogram_ori = histogram(id1)
-    histogram_pro = histogram(id2)
+    histogram_original = histogram(id1)
+    histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
+
     processed_time = str(end_time - start_time)
-    num_log = add_image_log(username, id2, datetime.datetime.now())
-    processed_image["histogram_original"] = histogram_ori
-    processed_image["histogram_processed"] = histogram_pro
-    processed_image["processed_time"] = processed_time
-    processed_image["log_compression_times"] = num_log
+
+    if username != 'Visitor':
+        num_log = add_image_log(username, id2, datetime.datetime.now())
+        processed_image["log_compression_count"] = num_log
+
+    processed_image["histogram_original"] = histogram_original
+    processed_image["histogram_processed"] = histogram_processed
+    processed_image["process_time"] = processed_time
     return jsonify(processed_image), 200
 
 
-@app.route("/api/reverse", methods=["POST"])
-def reverse_processed():
+@app.route("/api/reverse_video", methods=["POST"])
+def reverse_video_processing():
     """
     Get the processed image with reverse_video
     :param id1: uuid of original image
@@ -256,28 +286,33 @@ def reverse_processed():
         logging.warning("Incorrect JSON input: {}".format(e))
         err = {"error": "Incorrect JSON input"}
         return jsonify(err), 400
-    except AsserionError as e:
+    except AssertionError as e:
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    string_to_use = strip_image(image_new)
+    stripped_string = strip_image(image_new)
+
     id1 = str(uuid.uuid4())
     suffix = ".png"
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
+
     start_time = datetime.datetime.now()
-    decode_image(image_new, id1)
+    decode_image(stripped_string, id1)
     processed_image = reverse_video(id1, id2)
-    histogram_ori = histogram(id1)
-    histogram_pro = histogram(id2)
+    histogram_original = histogram(id1)
+    histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
     processed_time = str(end_time - start_time)
-    num_reverse = add_image_reverse(username, id2, datetime.datetime.now())
-    processed_image["histogram_original"] = histogram_ori
-    processed_image["histogram_processed"] = histogram_pro
-    processed_image["processed_time"] = processed_time
-    processed_image["reverse_video_times"] = num_reverse
+
+    if username != 'Visitor':
+        num_reverse = add_image_reverse(username, id2, datetime.datetime.now())
+        processed_image["reverse_video_count"] = num_reverse
+
+    processed_image["histogram_original"] = histogram_original
+    processed_image["histogram_processed"] = histogram_processed
+    processed_image["process_time"] = processed_time
     return jsonify(processed_image), 200
 
 

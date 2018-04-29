@@ -15,7 +15,7 @@ class ImageView extends Component {
       return (
         <div style={frameStyle}>
           <div className="dropzone">
-            <img className="selected-image" src={this.props.imageString} alt="None Selected"/>
+            <img className="selected-image" src={this.props.processedImageString} alt="None Selected"/>
           </div>
         </div>
       ) 
@@ -38,7 +38,7 @@ class ImageView extends Component {
               onDrop={this.props.onDrop}
               style={{ backgroundColor: "clear" }}
             >
-            <img className="selected-image" id='selImg' src={this.props.imageString} alt="None Selected"/>
+            <img className="selected-image" id='selImg' src={this.props.currentImageString} alt="None Selected"/>
             </Dropzone>
           </div>
         </div>

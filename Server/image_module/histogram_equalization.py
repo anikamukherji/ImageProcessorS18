@@ -13,23 +13,24 @@ def histogram_equalization(id1, id2):
         :returns: a python dictionary contains the base64 string
                   of the processed image and the image size
         :rtype: python dictionary
-        """
+    """
     try:
         import PIL
         from PIL import Image
         import numpy as np
         from skimage import exposure
         import logging
-        from image_module.encode_image import encode_image
-    except ImportError:
-        print("Necessary imports failed")
+        from Server.image_module.encode_image \
+            import encode_image
+    except ImportError as e:
+        print("Necessary imports failed: {}".format(e))
         return
 
     logging.basicConfig(filename='histogram_equalization.log',
                         level=logging.DEBUG, filemode='w')
 
     try:
-        i = np.asarray(PIL.Image.open(id1))  # convert into numpy array
+        i = np.asarray(Image.open(id1))  # convert into numpy array
     except FileNotFoundError:
         logging.debug("The image file does not exist")
         raise FileNotFoundError
@@ -49,8 +50,10 @@ def histogram_equalization(id1, id2):
 
     ima.save(id2)               # Save the processed image
     a2 = str(encode_image(id2))  # Generate the base64 string
+    print(a2[:100])
 
     processed_image = {'base64': a2, 'image_size': (w, h)}
-    logging.info("function run as expected")
+    logging.info("Returning dictionary with image base64 string"
+                 " and (width, height)")
 
     return processed_image

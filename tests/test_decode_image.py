@@ -4,12 +4,12 @@ def test_decode_image():
     """
 
     import pytest
-    from image_module.decode_image import decode_image
+    from Server.image_module.decode_image import decode_image
     import base64
 
     base64bytes1 = 'shjhjhds'
     base64bytes2 = base64bytes1.encode()
-    image_name = 'test1.jpg'
+    image_name = []
     image_name2 = 5
 
     with pytest.raises(TypeError):

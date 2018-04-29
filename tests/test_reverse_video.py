@@ -4,7 +4,7 @@ def test_reverse_video():
     """
 
     import pytest
-    from image_module.reverse_video import reverse_video
+    from Server.image_module.reverse_video import reverse_video
     import PIL
     from PIL import Image
 
