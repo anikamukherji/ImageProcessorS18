@@ -19,11 +19,25 @@ import models
 
 app = Flask(__name__)
 CORS(app)
-connect("mongodb://vcm-3551.vm.duke.edu:27017/image-app")
+connect("mongodb://localhost:27017/image_app")
+
+
+@app.route("/api/user_exists/<username>", methods=["GET"])
+def user_exists(username):
+    """
+    Returns whether username is already taken
+    :return: json dict of new user initial info
+    :rtype: Request
+    :return: 4xx error with json error dict if missing key
+             or incorrect type given
+    """
+    user_exists = already_user(username)
+    print("Username already exists: {}".format(user_exists))
+    return jsonify(user_exists), 200
 
 
 @app.route("/api/new_user", methods=["POST"])
-def user_post():
+def post_new_user():
     """
     Posts new user
     :return: json dict of new user initial info
@@ -33,15 +47,15 @@ def user_post():
     """
     r = request.get_json()
     try:
-        email = r["user_email"]
+        username = r["username"]
     except KeyError as e:
         logging.warning("Incorrect JSON input:{}".format(e))
         err = {"error": "Incorrect JSON input"}
         return jsonify(err), 400
-    if already_user(email):
+    if already_user(username):
         u_vals = {"warning": "This user_name is already existed"}
     else:
-        u_vals = create_user(email)
+        u_vals = create_user(username)
     return jsonify(u_vals), 200
 
 
@@ -57,7 +71,7 @@ def image_post():
     """
     r = request.get_json()
     try:
-        email = r["user_email"]
+        username = r["username"]
         image_new = r["image"]
         assert type(image_new) is str
     except KeyError as e:
@@ -68,25 +82,25 @@ def image_post():
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    if already_user(email):
-        u_vals = add_uploadimage(email, image_new, datetime.datetime.now())
+    if already_user(username):
+        u_vals = add_uploadimage(username, image_new, datetime.datetime.now())
     else:
-        u_vals = create_user(email)
-        u_vals = add_uploadimage(email, image_new, datetime.datetime.now())
+        u_vals = create_user(username)
+        u_vals = add_uploadimage(username, image_new, datetime.datetime.now())
     logging.debug("adding new image to user: {}".format(u_vals))
     return jsonify(u_vals), 200
 
 
-@app.route("/api/<user_email>", methods=["GET"])
-def get_image(user_email):
+@app.route("/api/<username>", methods=["GET"])
+def get_user(username):
     """
     Get the user with the whole info
     :return: json dict of user values
     :rtype: Request
     """
-    if already_user(user_email):
-        user = models.User.objects.raw({"_id": user_email}).first()
-        u_values = {"user_name": user.email,
+    if already_user(username):
+        user = models.User.objects.raw({"_id": username}).first()
+        u_values = {"user_name": user.username,
                     "upload_image": user.image_original,
                     "upload_time": user.upload_time
                     }
@@ -105,7 +119,7 @@ def histogram_processed():
     """
     r = request.get_json()
     try:
-        email = r["user_email"]
+        username = r["username"]
         image_new = r["image"]
         assert type(image_new) is str
     except KeyError as e:
@@ -125,15 +139,11 @@ def histogram_processed():
     start_time = datetime.datetime.now()
     decode_image(image_new, id1)
     processed_image = histogram_equalization(id1, id2)
-    # processed_image = {"1": "asdfer123","2": "123"}
     histogram_ori = histogram(id1)
-    # histogram_ori = "yz123"
     histogram_pro = histogram(id2)
-    # histogram_pro = "yz398"
     end_time = datetime.datetime.now()
-    # id2 = "123456"
     processed_time = str(end_time - start_time)
-    num_hist = add_image_hist(email, id2, datetime.datetime.now())
+    num_hist = add_image_hist(username, id2, datetime.datetime.now())
     processed_image["histogram_original"] = histogram_ori
     processed_image["histogram_processed"] = histogram_pro
     processed_image["processed_time"] = processed_time
@@ -152,7 +162,7 @@ def contrast_processed():
     """
     r = request.get_json()
     try:
-        email = r["user_email"]
+        username = r["username"]
         image_new = r["image"]
         assert type(image_new) is str
     except KeyError as e:
@@ -176,7 +186,7 @@ def contrast_processed():
     histogram_pro = histogram(id2)
     end_time = datetime.datetime.now()
     processed_time = str(end_time - start_time)
-    num_contrast = add_image_contrast(email, id2, datetime.datetime.now())
+    num_contrast = add_image_contrast(username, id2, datetime.datetime.now())
     processed_image["histogram_original"] = histogram_ori
     processed_image["histogram_processed"] = histogram_pro
     processed_image["processed_time"] = processed_time
@@ -195,7 +205,7 @@ def log_processed():
     """
     r = request.get_json()
     try:
-        email = r["user_email"]
+        username = r["username"]
         image_new = r["image"]
         assert type(image_new) is str
     except KeyError as e:
@@ -220,7 +230,7 @@ def log_processed():
     histogram_pro = histogram(id2)
     end_time = datetime.datetime.now()
     processed_time = str(end_time - start_time)
-    num_log = add_image_log(email, id2, datetime.datetime.now())
+    num_log = add_image_log(username, id2, datetime.datetime.now())
     processed_image["histogram_original"] = histogram_ori
     processed_image["histogram_processed"] = histogram_pro
     processed_image["processed_time"] = processed_time
@@ -239,7 +249,7 @@ def reverse_processed():
     """
     r = request.get_json()
     try:
-        email = r["user_email"]
+        username = r["username"]
         image_new = r["image"]
         assert type(image_new) is str
     except KeyError as e:
@@ -263,7 +273,7 @@ def reverse_processed():
     histogram_pro = histogram(id2)
     end_time = datetime.datetime.now()
     processed_time = str(end_time - start_time)
-    num_reverse = add_image_reverse(email, id2, datetime.datetime.now())
+    num_reverse = add_image_reverse(username, id2, datetime.datetime.now())
     processed_image["histogram_original"] = histogram_ori
     processed_image["histogram_processed"] = histogram_pro
     processed_image["processed_time"] = processed_time
