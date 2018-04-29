@@ -12,7 +12,6 @@ class ImageProcessor extends Component {
   constructor() {
     super()
     this.state = {
-      currUser: null,
       imageUploaded: false,
       imageName: null,
       imageFile: DefaultImage,
@@ -39,7 +38,7 @@ class ImageProcessor extends Component {
 
   userDict = () => {
     var dict = 
-      {"curr_user": this.state.currUser,
+      {"curr_user": this.props.username,
         "image_uploaded": this.state.currentImageString,
         "time_stamp": Date.now(),
       }
@@ -81,6 +80,7 @@ class ImageProcessor extends Component {
     return (
       <div className="container">
         <MuiThemeProvider muiTheme={muiTheme}>
+          <p className="basic-text"> Welcome {this.props.username}! </p>
           <p className="basic-text"> Click on the image on the left to upload your own </p>
           <div className="image-container">
             <ImageView imageString={this.state.currentImageString} onDrop={this.onDrop} imageUploaded={this.state.imageUploaded} blackFrameOn={this.state.blackFrameOn} userHasProcessedImage={this.state.userPressedButton}/>

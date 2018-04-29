@@ -45,7 +45,7 @@ class App extends Component {
 
   didLoginAsVisitor = event => {
     this.setState({
-      currUser: null,
+      currUser: "Visitor",
       isVisitor: true,
     });
   }
