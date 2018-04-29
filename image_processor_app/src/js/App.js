@@ -16,6 +16,7 @@ class App extends Component {
       isVisitor: false,
       currUser: null,
       usernameWasTaken: false,
+      loggedInWithInvalid: false,
     }
   }
 
@@ -27,26 +28,38 @@ class App extends Component {
   }
 
   didPressLogin = event => {
-    // TO DO 
-    // call API to see if user already exists
-    // if user exists, login to imageprocesoor
-    // else require that user creates new user
-    this.setState({
-      userLoggedIn: true,
-    });
-  }
-
-  didPressNewUser = event => {
-    // TO DO 
-    // call API to see if username already taken
-    // if available, login to imageprocesoor
-    // else require that user chooses different username
+    // calls API to see if user already exists
+    // if user exists, logs in to imageprocesoor
+    // else requires that user creates new user
     var requestURL = hostName + "api/user_exists/" + this.state.currUser
     axios.get(requestURL).then( response => { 
       this.setState({
-        userLoggedIn: !response.data,
-        usernameWasTaken: response.data,
+        userLoggedIn: response.data,
+        loggedInWithInvalid: !response.data,
       });
+    }); 
+  }
+
+  didPressNewUser = event => {
+    // calls API to see if username already taken
+    // if available, logs in to imageprocesoor
+    // else requires that user chooses different username
+    var r1URL = hostName + "api/user_exists/" + this.state.currUser
+    axios.get(r1URL).then( response => { 
+      if (response.data) {
+        this.setState({
+          userLoggedIn: false,
+          usernameWasTaken: true,
+        });
+      } else {
+        var r2URL = hostName + "api/new_user" 
+        var dict = {"username": this.state.currUser}
+        axios.post(r2URL, dict).then( response => { 
+          this.setState({
+            userLoggedIn: true,
+          });
+        });
+      }
     }); 
   }
 
@@ -66,6 +79,7 @@ class App extends Component {
           newUserHandler={this.didPressNewUser}
           visitorHandler={this.didLoginAsVisitor}
           showTakenUserLabel={this.state.usernameWasTaken}
+          showCreateNewUserLabel={this.state.loggedInWithInvalid}
         />
       )
     } else {

@@ -9,7 +9,11 @@ class LoginScreen extends Component {
   renderWarning = () => {
     if (this.props.showTakenUserLabel) {
       return (
-        <p className="taken-user-label">Username is Taken: Please Choose Another </p>
+        <p className="warning-label">Username is Taken: Please Choose Another </p>
+      )
+    } else if (this.props.showCreateNewUserLabel) {
+      return (
+        <p className="warning-label">Username Does Not Exist: Please Create New User</p>
       )
     }
   }
