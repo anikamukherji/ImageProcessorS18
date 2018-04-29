@@ -12,4 +12,4 @@ scikit-image
 pillow
 matplotlib
 pybase64
-logging
+
