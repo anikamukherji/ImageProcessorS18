@@ -21,6 +21,7 @@ class ImageProcessor extends Component {
       imageFile: DefaultImage,
       currentImageString: DefaultImage,
       processedImageString: null,
+      processedImageReceived: false,
       blackFrameOn: false,
       userPressedButton: false,
       buttonIndexSelected: null,
@@ -75,6 +76,7 @@ class ImageProcessor extends Component {
     // keep track of what button has been pressed
     this.setState({
       buttonIndexSelected: index,
+      userPressedButton: true,
     }) 
     this.processImage()
   }
@@ -89,21 +91,19 @@ class ImageProcessor extends Component {
       case 0: 
         requestURL = hostName + "api/histogram_equalization"
         break
-      //case 1: 
-        //requestURL = hostName + "api/contrast_stretching"
-        //break
-      //case 2: 
-        //requestURL = hostName + "api/log_compression"
-        //break
-      //case 3: 
-        //requestURL = hostName + "api/reverse_video"
-        //break
+      case 1: 
+        requestURL = hostName + "api/contrast_stretching"
+        break
+      case 2: 
+        requestURL = hostName + "api/log_compression"
+        break
+      case 3: 
+        requestURL = hostName + "api/reverse_video"
+        break
       default:
         return
     } 
-    console.log("starting request")
     axios.post(requestURL, dict).then( response => { 
-      console.log(response)
       var data = response.data
       var b64string = data.base64
       let base64Image = b64string.split('b\'').pop();
@@ -111,23 +111,20 @@ class ImageProcessor extends Component {
 
       this.setState({
         processedImageString: base64Image,
-        userPressedButton: true,
         processCount: data.process_count,
         lastProcessTime: data.process_time,
         imageHeight: data.image_size[1],
         imageWidth: data.image_size[0],
+        processedImageReceived: true,
       });
-      console.log("finished request")
-      console.log(this.state.processedImageString)
-      console.log(this.state.currentImageString)
     });
   }
 
   renderStats = () => {
-    if (this.state.userPressedButton) {
+    if (this.state.processedImageReceived) {
       return (
         <div className="stats">
-          The image size is {this.state.imageWidth} x {this.state.imageHeight}
+          The image size has width {this.state.imageWidth} and height {this.state.imageHeight}
             <br/>
           You have performed this action {this.state.processCount} times!
             <br/>
@@ -159,6 +156,7 @@ class ImageProcessor extends Component {
               imageUploaded={this.state.imageUploaded} 
               blackFrameOn={this.state.blackFrameOn} 
               userHasProcessedImage={this.state.userPressedButton}
+              processedImageReceived={this.state.processedImageReceived}
             />
           </div>
 

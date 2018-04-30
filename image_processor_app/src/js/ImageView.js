@@ -11,11 +11,11 @@ class ImageView extends Component {
       margin: 25,
     }
     
-    if (this.props.userHasProcessedImage) {
+    if (this.props.processedImageReceived) {
       return (
         <div style={frameStyle}>
           <div className="dropzone">
-            <img className="selected-image" ng-src={this.props.processedImageString} alt="None Selected"/>
+            <img className="selected-image" ng-src={this.props.processedImageString} alt="None"/>
           </div>
         </div>
       ) 
