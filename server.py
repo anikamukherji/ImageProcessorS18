@@ -16,14 +16,14 @@ from user import add_image_contrast, add_image_log, add_image_reverse
 from models import User
 import logging
 import models
-from Server.image_functions.image_module.decode_image import *
-from Server.image_functions.image_module.encode_image import *
-from Server.image_functions.image_module.histogram_equalization import *
-from Server.image_functions.image_module.image_histogram import *
-from Server.image_functions.image_module.log_compression import *
-from Server.image_functions.image_module.reverse_video import *
-from Server.image_functions.image_module.contrast_stretching import *
-from Server.image_functions.image_module.strip_image import *
+from Server.image_module.decode_image import *
+from Server.image_module.encode_image import *
+from Server.image_module.histogram_equalization import *
+from Server.image_module.image_histogram import *
+from Server.image_module.log_compression import *
+from Server.image_module.reverse_video import *
+from Server.image_module.contrast_stretching import *
+from Server.image_module.strip_image import *
 
 app = Flask(__name__)
 CORS(app)
@@ -158,11 +158,11 @@ def histogram_equalization_processing():
 
     if username != 'Visitor':
         num_hist = add_image_hist(username, id2, datetime.datetime.now())
-        processed_image["histogram_equalization_count"] = num_hist
+        processed_image["process_count"] = num_hist
 
     processed_image["histogram_original"] = histogram_original
     processed_image["histogram_processed"] = histogram_processed
-    processed_image["processed_time"] = process_time
+    processed_image["process_time"] = process_time
 
     print("returning processed image")
     return jsonify(processed_image), 200
@@ -204,17 +204,16 @@ def contrast_stretching_processing():
     histogram_original = histogram(id1)
     histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
-
-    processed_time = str(end_time - start_time)
+    process_time = str(end_time - start_time)
 
     if username != 'Visitor':
         num_contrast = add_image_contrast(username,
                                           id2, datetime.datetime.now())
-        processed_image["contrast_streching_count"] = num_contrast
+        processed_image["process_count"] = num_contrast
 
     processed_image["histogram_original"] = histogram_original
     processed_image["histogram_processed"] = histogram_processed
-    processed_image["process_time"] = processed_time
+    processed_image["process_time"] = process_time
     return jsonify(processed_image), 200
 
 
@@ -250,21 +249,21 @@ def log_compression_processing():
 
     start_time = datetime.datetime.now()
     decode_image(stripped_string, id1)
-    processed_iamge = log_compression(id1, id2)
+    processed_image = log_compression(id1, id2)
     end_time = datetime.datetime.now()
     histogram_original = histogram(id1)
     histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
 
-    processed_time = str(end_time - start_time)
+    process_time = str(end_time - start_time)
 
     if username != 'Visitor':
         num_log = add_image_log(username, id2, datetime.datetime.now())
-        processed_image["log_compression_count"] = num_log
+        processed_image["process_count"] = num_log
 
     processed_image["histogram_original"] = histogram_original
     processed_image["histogram_processed"] = histogram_processed
-    processed_image["process_time"] = processed_time
+    processed_image["process_time"] = process_time
     return jsonify(processed_image), 200
 
 
@@ -304,15 +303,15 @@ def reverse_video_processing():
     histogram_original = histogram(id1)
     histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
-    processed_time = str(end_time - start_time)
+    process_time = str(end_time - start_time)
 
     if username != 'Visitor':
         num_reverse = add_image_reverse(username, id2, datetime.datetime.now())
-        processed_image["reverse_video_count"] = num_reverse
+        processed_image["process_count"] = num_reverse
 
     processed_image["histogram_original"] = histogram_original
     processed_image["histogram_processed"] = histogram_processed
-    processed_image["process_time"] = processed_time
+    processed_image["process_time"] = process_time
     return jsonify(processed_image), 200
 
 

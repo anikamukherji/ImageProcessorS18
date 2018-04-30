@@ -15,7 +15,7 @@ class ImageView extends Component {
       return (
         <div style={frameStyle}>
           <div className="dropzone">
-            <img className="selected-image" src={this.props.processedImageString} alt="None Selected"/>
+            <img className="selected-image" ng-src={this.props.processedImageString} alt="None Selected"/>
           </div>
         </div>
       ) 

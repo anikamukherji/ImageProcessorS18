@@ -24,6 +24,10 @@ class ImageProcessor extends Component {
       blackFrameOn: false,
       userPressedButton: false,
       buttonIndexSelected: null,
+      processCount: null,
+      lastProcessTime: null,
+      imageHeight: null,
+      imageWidth: null,
     }
   }
 
@@ -108,11 +112,29 @@ class ImageProcessor extends Component {
       this.setState({
         processedImageString: base64Image,
         userPressedButton: true,
+        processCount: data.process_count,
+        lastProcessTime: data.process_time,
+        imageHeight: data.image_size[1],
+        imageWidth: data.image_size[0],
       });
       console.log("finished request")
       console.log(this.state.processedImageString)
       console.log(this.state.currentImageString)
     });
+  }
+
+  renderStats = () => {
+    if (this.state.userPressedButton) {
+      return (
+        <div className="stats">
+          The image size is {this.state.imageWidth} x {this.state.imageHeight}
+            <br/>
+          You have performed this action {this.state.processCount} times!
+            <br/>
+          The last processing took {this.state.lastProcessTime} to complete
+        </div>
+      )
+    } 
   }
 
   render() {
@@ -121,6 +143,14 @@ class ImageProcessor extends Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <p className="basic-text"> Welcome {this.props.username}! </p>
           <p className="basic-text"> Click on the image on the left to upload your own </p>
+            <div className="toggle">
+              <Toggle
+                label="Black Frame"
+                onToggle={this.onFrameToggle}
+                labelStyle={{ fontFamily: 'Raleway, sans-serif' }}
+              />
+            </div>
+
           <div className="image-container">
             <ImageView 
               currentImageString={this.state.currentImageString} 
@@ -132,13 +162,7 @@ class ImageProcessor extends Component {
             />
           </div>
 
-            <div className="toggle">
-              <Toggle
-                label="Black Frame"
-                onToggle={this.onFrameToggle}
-                labelStyle={{ fontFamily: 'Raleway, sans-serif' }}
-              />
-            </div>
+          {this.renderStats()}
 
           <ButtonView onClickParentCallback={this.onClick}/>
         </MuiThemeProvider>
