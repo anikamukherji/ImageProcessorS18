@@ -10,12 +10,13 @@ class ImageView extends Component {
       backgroundColor: this.props.blackFrameOn ? "black" : "white",
       margin: 25,
     }
-    
     if (this.props.processedImageReceived) {
+      console.log(this.props.currentImageString)    
+      console.log(this.props.processedImageString)    
       return (
         <div style={frameStyle}>
           <div className="dropzone">
-            <img className="selected-image" ng-src={this.props.processedImageString} alt="None"/>
+            <img className="selected-image" id='selImg' ng-src={this.props.processedImageString} alt="None Selected"/>
           </div>
         </div>
       ) 
@@ -34,7 +35,8 @@ class ImageView extends Component {
         <div style={frameStyle}>
           <div className="dropzone">
            <Dropzone
-              accept="image/jpeg, image/jpg, image/png"
+              //accept="image/jpeg, image/jpg, image/png"
+              accept="image/png"
               onDrop={this.props.onDrop}
               style={{ backgroundColor: "clear" }}
             >

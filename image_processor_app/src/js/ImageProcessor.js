@@ -107,6 +107,7 @@ class ImageProcessor extends Component {
       var data = response.data
       var b64string = data.base64
       let base64Image = b64string.split('b\'').pop();
+      base64Image = base64Image.slice(0, base64Image.length-2)
       base64Image = "data:image/png;base64," + base64Image
 
       this.setState({
