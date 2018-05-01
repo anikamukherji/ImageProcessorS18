@@ -11,6 +11,19 @@
   height: 250px;
 }
 
+.download-text {
+  font-family: 'Raleway', sans-serif;
+  padding-bottom: 10px;
+  line-height: 150%;
+  text-decoration: None;
+  color: black;
+  transition: all cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.download-text:hover {
+  transform: scale(1.15, 1.15);
+}
+
 .dropzone {
   margin: 20px;
   height: 100%;
