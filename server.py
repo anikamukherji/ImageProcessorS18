@@ -128,6 +128,7 @@ def histogram_equalization_processing():
     try:
         username = r["username"]
         image = r["image"]
+        file_type = r["file_type"]
         assert type(image) == str
     except KeyError as e:
         logging.warning("Incorrect JSON input: {}".format(e))
@@ -137,9 +138,9 @@ def histogram_equalization_processing():
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    stripped_image = strip_image(image)
+    stripped_image = strip_image(image, file_type)
 
-    suffix = ".png"
+    suffix = "." + file_type
     # id1 is where the original file will be stored
     filename1 = str(uuid.uuid4())
     id1 = filename1 + suffix
@@ -181,6 +182,7 @@ def contrast_stretching_processing():
     try:
         username = r["username"]
         image_new = r["image"]
+        file_type = r["file_type"]
         assert type(image_new) is str
     except KeyError as e:
         logging.warning("Incorrect JSON input: {}".format(e))
@@ -190,10 +192,10 @@ def contrast_stretching_processing():
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    stripped_string = strip_image(image_new)
+    stripped_string = strip_image(image_new, file_type)
 
     id1 = str(uuid.uuid4())
-    suffix = ".png"
+    suffix = "." + file_type
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
@@ -230,6 +232,7 @@ def log_compression_processing():
     try:
         username = r["username"]
         image_new = r["image"]
+        file_type = r["file_type"]
         assert type(image_new) is str
     except KeyError as e:
         logging.warning("Incorrect JSON input: {}".format(e))
@@ -239,10 +242,10 @@ def log_compression_processing():
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    stripped_string = strip_image(image_new)
+    stripped_string = strip_image(image_new, file_type)
 
     id1 = str(uuid.uuid4())
-    suffix = ".png"
+    suffix = "." + file_type
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
@@ -280,6 +283,7 @@ def reverse_video_processing():
     try:
         username = r["username"]
         image_new = r["image"]
+        file_type = r["file_type"]
         assert type(image_new) is str
     except KeyError as e:
         logging.warning("Incorrect JSON input: {}".format(e))
@@ -289,10 +293,10 @@ def reverse_video_processing():
         logging.warning("Incorrect image type given: {}".format(e))
         err = {"error": "Incorrect image type given"}
         return jsonify(err), 400
-    stripped_string = strip_image(image_new)
+    stripped_string = strip_image(image_new, file_type)
 
     id1 = str(uuid.uuid4())
-    suffix = ".png"
+    suffix = "." + file_type
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix

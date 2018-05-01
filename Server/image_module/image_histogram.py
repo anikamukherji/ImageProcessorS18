@@ -28,7 +28,7 @@ def histogram(id1):
 
     if id1.find('png') == -1:       # Ensure that the input image is a png file
         logging.error('This histogram function does not support this format')
-        raise TypeError('TypeError with the input image')
+        raise TypeError("Input image is of the wrong format")
 
     prefix = 'histogram_'
     id1_histogram = prefix + id1

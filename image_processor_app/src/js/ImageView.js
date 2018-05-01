@@ -35,8 +35,7 @@ class ImageView extends Component {
         <div style={frameStyle}>
           <div className="dropzone">
            <Dropzone
-              //accept="image/jpeg, image/jpg, image/png"
-              accept="image/png"
+              accept="image/jpeg, image/jpg, image/png"
               onDrop={this.props.onDrop}
               style={{ backgroundColor: "clear" }}
             >
