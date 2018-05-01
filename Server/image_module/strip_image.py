@@ -14,6 +14,8 @@ def strip_image(base64string, file_type):
     index = base64string.find(',')  # Strip the string until first ','
     if file_type == "png":
         base64string = base64string[index+1:]
+    if file_type == "jpg":
+        base64string = base64string[index+1:]
     if file_type == "jpeg":
         base64string = base64string[index+1:]
 

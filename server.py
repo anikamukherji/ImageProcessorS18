@@ -140,7 +140,7 @@ def histogram_equalization_processing():
         return jsonify(err), 400
     stripped_image = strip_image(image, file_type)
 
-    suffix = "." + file_type
+    suffix = ".png"
     # id1 is where the original file will be stored
     filename1 = str(uuid.uuid4())
     id1 = filename1 + suffix
@@ -152,8 +152,8 @@ def histogram_equalization_processing():
     decode_image(stripped_image, id1)
     # processed_image dictionary will be returned
     processed_image = histogram_equalization(id1, id2)
-    histogram_original = histogram(id1)
-    histogram_processed = histogram(id2)
+    # histogram_original = histogram(id1)
+    # histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
     process_time = str(end_time - start_time)
 
@@ -161,8 +161,8 @@ def histogram_equalization_processing():
         num_hist = add_image_hist(username, id2, datetime.datetime.now())
         processed_image["process_count"] = num_hist
 
-    processed_image["histogram_original"] = histogram_original
-    processed_image["histogram_processed"] = histogram_processed
+    # processed_image["histogram_original"] = histogram_original
+    # processed_image["histogram_processed"] = histogram_processed
     processed_image["process_time"] = process_time
 
     print("returning processed image")
@@ -195,7 +195,7 @@ def contrast_stretching_processing():
     stripped_string = strip_image(image_new, file_type)
 
     id1 = str(uuid.uuid4())
-    suffix = "." + file_type
+    suffix = ".png"
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
@@ -203,8 +203,8 @@ def contrast_stretching_processing():
     start_time = datetime.datetime.now()
     decode_image(stripped_string, id1)
     processed_image = contrast_stretching(id1, id2)
-    histogram_original = histogram(id1)
-    histogram_processed = histogram(id2)
+    # histogram_original = histogram(id1)
+    # histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
     process_time = str(end_time - start_time)
 
@@ -213,8 +213,8 @@ def contrast_stretching_processing():
                                           id2, datetime.datetime.now())
         processed_image["process_count"] = num_contrast
 
-    processed_image["histogram_original"] = histogram_original
-    processed_image["histogram_processed"] = histogram_processed
+    # processed_image["histogram_original"] = histogram_original
+    # processed_image["histogram_processed"] = histogram_processed
     processed_image["process_time"] = process_time
     return jsonify(processed_image), 200
 
@@ -245,7 +245,7 @@ def log_compression_processing():
     stripped_string = strip_image(image_new, file_type)
 
     id1 = str(uuid.uuid4())
-    suffix = "." + file_type
+    suffix = ".png"
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
@@ -254,8 +254,8 @@ def log_compression_processing():
     decode_image(stripped_string, id1)
     processed_image = log_compression(id1, id2)
     end_time = datetime.datetime.now()
-    histogram_original = histogram(id1)
-    histogram_processed = histogram(id2)
+    # histogram_original = histogram(id1)
+    # histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
 
     process_time = str(end_time - start_time)
@@ -264,8 +264,8 @@ def log_compression_processing():
         num_log = add_image_log(username, id2, datetime.datetime.now())
         processed_image["process_count"] = num_log
 
-    processed_image["histogram_original"] = histogram_original
-    processed_image["histogram_processed"] = histogram_processed
+    # processed_image["histogram_original"] = histogram_original
+    # processed_image["histogram_processed"] = histogram_processed
     processed_image["process_time"] = process_time
     return jsonify(processed_image), 200
 
@@ -296,7 +296,7 @@ def reverse_video_processing():
     stripped_string = strip_image(image_new, file_type)
 
     id1 = str(uuid.uuid4())
-    suffix = "." + file_type
+    suffix = ".png"
     id1 = id1 + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + suffix
@@ -304,8 +304,8 @@ def reverse_video_processing():
     start_time = datetime.datetime.now()
     decode_image(stripped_string, id1)
     processed_image = reverse_video(id1, id2)
-    histogram_original = histogram(id1)
-    histogram_processed = histogram(id2)
+    # histogram_original = histogram(id1)
+    # histogram_processed = histogram(id2)
     end_time = datetime.datetime.now()
     process_time = str(end_time - start_time)
 
@@ -313,8 +313,8 @@ def reverse_video_processing():
         num_reverse = add_image_reverse(username, id2, datetime.datetime.now())
         processed_image["process_count"] = num_reverse
 
-    processed_image["histogram_original"] = histogram_original
-    processed_image["histogram_processed"] = histogram_processed
+    # processed_image["histogram_original"] = histogram_original
+    # processed_image["histogram_processed"] = histogram_processed
     processed_image["process_time"] = process_time
     return jsonify(processed_image), 200
 
