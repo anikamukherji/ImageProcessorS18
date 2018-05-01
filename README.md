@@ -22,7 +22,7 @@ npm run start
 
 Here are some images of the app: 
 
-![login](./images/image1)
-![visitor no frame](./images/image2)
-![visitor black frame](./images/image3)
+![login](./images/image1.png)
+![visitor no frame](./images/image2.png)
+![visitor black frame](./images/image3.png)
 
