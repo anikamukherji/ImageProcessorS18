@@ -20,6 +20,7 @@ class ImageProcessor extends Component {
       imageName: null,
       imageFile: DefaultImage,
       currentImageString: DefaultImage,
+      currentImageType: 'jpg',
       processedImageString: null,
       processedImageReceived: false,
       blackFrameOn: false,
@@ -36,12 +37,16 @@ class ImageProcessor extends Component {
     // handler for DropZone upload to update state
     if (files.length > 0) {
       var file = files[0]
+      var fileType = file.type
+      fileType = fileType.split('image/').pop()
       this.setState({
         imageUploaded: true,
         imageName: file.name,
         imageFile: file,
+        currentImageType: fileType,
       });
       this.prepFile(file);
+      console.log(this.state.currentImageString)
     }
   }
 
@@ -78,16 +83,17 @@ class ImageProcessor extends Component {
       buttonIndexSelected: index,
       userPressedButton: true,
     }) 
-    this.processImage()
+    this.processImage(index)
   }
 
-  processImage = () => {
+  processImage = index => {
     var dict = {
       "username": this.props.username,
       "image": this.state.currentImageString,
+      "file_type": this.state.currentImageType,
     }
     var requestURL;
-    switch(this.state.buttonIndexSelected){
+    switch(index){
       case 0: 
         requestURL = hostName + "api/histogram_equalization"
         break
@@ -107,7 +113,7 @@ class ImageProcessor extends Component {
       var data = response.data
       var b64string = data.base64
       let base64Image = b64string.split('b\'').pop();
-      base64Image = base64Image.slice(0, base64Image.length-2)
+      base64Image = base64Image.slice(0, base64Image.length-3)
       base64Image = "data:image/png;base64," + base64Image
 
       this.setState({
@@ -118,6 +124,8 @@ class ImageProcessor extends Component {
         imageWidth: data.image_size[0],
         processedImageReceived: true,
       });
+      console.log(this.state.currentImageString)
+      console.log(this.state.processedImageString)
     });
   }
 
