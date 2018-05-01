@@ -12,8 +12,8 @@ def test_strip_image():
     test_answer2 = 'dshjhurbsdb'
     test_data3 = 58989
 
-    assert test_answer1 == strip_image(test_data1).decode()
-    assert test_answer2 == strip_image(test_data2).decode()
+    assert test_answer1 == strip_image(test_data1, 'png').decode()
+    assert test_answer2 == strip_image(test_data2, 'png').decode()
 
     with pytest.raises(TypeError):
-        strip_image(test_data3)
+        strip_image(test_data3, 'png')
