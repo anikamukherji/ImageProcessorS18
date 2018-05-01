@@ -124,23 +124,29 @@ class ImageProcessor extends Component {
         imageWidth: data.image_size[0],
         processedImageReceived: true,
       });
-      console.log(this.state.currentImageString)
-      console.log(this.state.processedImageString)
     });
   }
 
   renderStats = () => {
-    if (this.state.processedImageReceived) {
-      return (
-        <div className="stats">
-          The image size has width {this.state.imageWidth} and height {this.state.imageHeight}
-            <br/>
-          You have performed this action {this.state.processCount} times!
-            <br/>
-          The last processing took {this.state.lastProcessTime} to complete
-        </div>
-      )
-    } 
+    if (this.state.userPressedButton) {
+      if (this.state.processedImageReceived) {
+        return (
+          <div className="stats">
+            The image size has width {this.state.imageWidth} and height {this.state.imageHeight}
+              <br/>
+            You have performed this action {this.state.processCount} times!
+              <br/>
+            The last processing took {this.state.lastProcessTime} to complete
+          </div>
+        )
+      } else {
+        return (
+          <div className="stats">
+            Image is processing - please be patient!
+          </div>
+        )
+      } 
+    }
   }
 
   render() {

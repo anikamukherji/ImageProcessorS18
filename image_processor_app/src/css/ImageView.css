@@ -6,9 +6,21 @@
   align-items: center;
 }
 
+.processed-image-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
 .selected-image {
   max-width:100%;
   height: 250px;
+}
+
+.download-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .download-text {
