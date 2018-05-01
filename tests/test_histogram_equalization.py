@@ -4,7 +4,8 @@ def test_histogram_equalization():
     """
 
     import pytest
-    from image_module.histogram_equalization import histogram_equalization
+    from Server.image_module.histogram_equalization \
+        import histogram_equalization
     import PIL
     from PIL import Image
 

@@ -15,21 +15,18 @@ def decode_image(base64bytes, image_name):
     try:
         import base64
         import logging
-    except ImportError:
-        print("Necessary imports failed")
+    except ImportError as e:
+        print("Necessary imports failed {}".format(e))
         return
 
     logging.basicConfig(filename='decode_image.log',
                         level=logging.DEBUG, filemode='w')
 
-    if type(base64bytes) is not bytes:
-        logging.error('Watch out!The input should in bytes')
-        raise TypeError('TypeError with the input')
-
     if type(image_name) is not str:
-        logging.error('Watch out!The input should be string')
-        raise TypeError('TypeError with the input')
+        logging.error('Warning: the input should be type str')
+        raise TypeError('Input is type {}, should be'
+                        ' type str'.format(type(image_name)))
 
     with open(image_name, 'wb') as image_out:
         image_out.write(base64.b64decode(base64bytes))
-        logging.info("function run as expected")
+        logging.info("Writing to file {}".format(image_name))

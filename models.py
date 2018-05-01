@@ -2,7 +2,7 @@ from pymodm import fields, MongoModel
 
 
 class User(MongoModel):
-    email = fields.EmailField(primary_key=True)
+    username = fields.CharField(primary_key=True)
     hist_times = fields.IntegerField()
     contrast_times = fields.IntegerField()
     log_times = fields.IntegerField()
@@ -25,7 +25,7 @@ class User(MongoModel):
         :rtype: dict
         """
         vals = {
-                "user_email": self.email,
+                "username": self.username,
                 "user_upload_image": self.image_original,
                 "hist_times": self.hist_times,
                 "contrast_times": self.contrast_times,

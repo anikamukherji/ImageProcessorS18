@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import ImageProcessor from './ImageProcessor';
 import LoginScreen from './LoginScreen';
+import axios from 'axios';
 import '../css/App.css';
+
+//var hostName = "http://vcm-3576.vm.duke.edu:5000/"
+var hostName = "http://127.0.0.1:5000/"
 
 class App extends Component {
 
@@ -12,6 +16,7 @@ class App extends Component {
       isVisitor: false,
       currUser: null,
       usernameWasTaken: false,
+      loggedInWithInvalid: false,
     }
   }
 
@@ -23,29 +28,44 @@ class App extends Component {
   }
 
   didPressLogin = event => {
-    // TO DO 
-    // call API to see if user already exists
-    // if user exists, login to imageprocesoor
-    // else require that user creates new user
-    this.setState({
-      userLoggedIn: true,
-    });
+    // calls API to see if user already exists
+    // if user exists, logs in to imageprocesoor
+    // else requires that user creates new user
+    var requestURL = hostName + "api/user_exists/" + this.state.currUser
+    axios.get(requestURL).then( response => { 
+      this.setState({
+        userLoggedIn: response.data,
+        loggedInWithInvalid: !response.data,
+      });
+    }); 
   }
 
   didPressNewUser = event => {
-    // TO DO 
-    // call API to see if username already taken
-    // if available, login to imageprocesoor
-    // else require that user chooses different username
-    this.setState({
-      userLoggedIn: false,
-      usernameWasTaken: true,
-    });
+    // calls API to see if username already taken
+    // if available, logs in to imageprocesoor
+    // else requires that user chooses different username
+    var r1URL = hostName + "api/user_exists/" + this.state.currUser
+    axios.get(r1URL).then( response => { 
+      if (response.data) {
+        this.setState({
+          userLoggedIn: false,
+          usernameWasTaken: true,
+        });
+      } else {
+        var r2URL = hostName + "api/new_user" 
+        var dict = {"username": this.state.currUser}
+        axios.post(r2URL, dict).then( response => { 
+          this.setState({
+            userLoggedIn: true,
+          });
+        });
+      }
+    }); 
   }
 
   didLoginAsVisitor = event => {
     this.setState({
-      currUser: null,
+      currUser: "Visitor",
       isVisitor: true,
     });
   }
@@ -59,6 +79,7 @@ class App extends Component {
           newUserHandler={this.didPressNewUser}
           visitorHandler={this.didLoginAsVisitor}
           showTakenUserLabel={this.state.usernameWasTaken}
+          showCreateNewUserLabel={this.state.loggedInWithInvalid}
         />
       )
     } else {

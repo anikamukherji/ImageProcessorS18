@@ -9,6 +9,12 @@
   font-family: 'Raleway', sans-serif;
 }
 
+.stats {
+  font-family: 'Raleway', sans-serif;
+  padding-bottom: 10px;
+  line-heigh: 150%;
+}
+
 .footer-text {
   font-family: 'Raleway', sans-serif;
   background-color: #daf0ee;

@@ -4,7 +4,7 @@ def test_histogram():
     """
 
     import pytest
-    from image_module.image_histogram import histogram
+    from Server.image_module.image_histogram import histogram
 
     test_data1 = 'test_image384935893.tiff'
     test_data2 = 'test_image8439843948390.jpg'

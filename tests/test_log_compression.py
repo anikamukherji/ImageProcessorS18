@@ -4,7 +4,7 @@ def test_log_compression():
     """
 
     import pytest
-    from image_module.log_compression import log_compression
+    from Server.image_module.log_compression import log_compression
     import PIL
     from PIL import Image
 

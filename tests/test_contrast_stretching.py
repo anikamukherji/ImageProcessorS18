@@ -4,7 +4,7 @@ def test_contrast_stretching():
     """
 
     import pytest
-    from image_module.contrast_stretching import contrast_stretching
+    from Server.image_module.contrast_stretching import contrast_stretching
     import PIL
     from PIL import Image
 

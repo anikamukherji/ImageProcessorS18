@@ -17,9 +17,10 @@ def histogram(id1):
         import numpy as np
         import logging
         import os
-        from image_module.encode_image import encode_image
-    except ImportError:
-        print("Necessary imports failed")
+        from Server.image_module.encode_image \
+            import encode_image
+    except ImportError as e:
+        print("Necessary imports failed: {}".format(e))
         return
 
     logging.basicConfig(filename='encode_image.log', level=logging.DEBUG,

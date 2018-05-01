@@ -4,7 +4,7 @@ def test_strip_image():
     """
 
     import pytest
-    from image_module.strip_image import strip_image
+    from Server.image_module.strip_image import strip_image
 
     test_data1 = 'data:image/jpeg:base64,/9j'
     test_data2 = 'data:image/jpeg:base64,dshjhurbsdb'
