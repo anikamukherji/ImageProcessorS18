@@ -310,7 +310,7 @@ def reverse_video_processing():
 
     id1_origin = str(uuid.uuid4())
     suffix = "." + file_type
-    id1 = id1_origin + suffix
+    id1_temp = id1_origin + suffix
     id2 = str(uuid.uuid4())
     id2 = id2 + ".png"
 
