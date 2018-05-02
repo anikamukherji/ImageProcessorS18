@@ -7,6 +7,7 @@
   font-family: 'Raleway', sans-serif;
   margin: 0px;
   line-height:100px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px #1b2a41;
 }
 
 /* Background gradient inspired by Manuel Pinto: https://codepen.io/P1N2O/pen/pyBNzX */

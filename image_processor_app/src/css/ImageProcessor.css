@@ -16,9 +16,10 @@
 }
 
 .footer-text {
+  padding-top: 20px;
+  padding-bottom: 20px;
   font-family: 'Raleway', sans-serif;
   background-color: #daf0ee;
-  margin-top: 50px;
 }
 
 .toggle {

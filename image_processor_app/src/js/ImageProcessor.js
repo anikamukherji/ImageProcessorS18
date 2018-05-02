@@ -7,6 +7,7 @@ import Toggle from 'material-ui/Toggle';
 import DefaultImage from '../images/default.jpg';
 import axios from 'axios';
 import '../css/ImageProcessor.css';
+import '../css/App.css';
 
 //var hostName = "http://vcm-3576.vm.duke.edu:5000/"
 var hostName = "http://127.0.0.1:5000/"
@@ -180,7 +181,13 @@ class ImageProcessor extends Component {
           <ButtonView onClickParentCallback={this.onClick}/>
         </MuiThemeProvider>
 
-        <p className="footer-text"> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
+        <div className="footer-text">
+          <p> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
+          <p> BME590 Final Project </p>
+          <p> Anika Mukherji </p>
+          <p> Zhiwei Kang </p>
+          <p> Yi Zhao </p>
+        </div>
       </div>
     );
   }
