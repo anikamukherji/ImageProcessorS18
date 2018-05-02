@@ -4,8 +4,7 @@ import LoginScreen from './LoginScreen';
 import axios from 'axios';
 import '../css/App.css';
 
-//var hostName = "http://vcm-3576.vm.duke.edu:5000/"
-var hostName = "http://127.0.0.1:5000/"
+var hostName = "http://vcm-3576.vm.duke.edu:5000/"
 
 class App extends Component {
 

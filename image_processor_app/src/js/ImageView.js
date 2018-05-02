@@ -11,12 +11,15 @@ class ImageView extends Component {
       margin: 25,
     }
     if (this.props.processedImageReceived) {
-      console.log(this.props.currentImageString)    
-      console.log(this.props.processedImageString)    
       return (
-        <div style={frameStyle}>
-          <div className="dropzone">
-            <img className="selected-image" id='selImg' src={this.props.processedImageString} alt="None Selected"/>
+        <div className="processed-image-container">
+          <div style={frameStyle}>
+            <div className="dropzone">
+              <img className="selected-image" id='selImg' src={this.props.processedImageString} alt="None Selected"/>
+            </div>
+          </div>
+          <div className="download-container">
+            <a className="download-text" href={this.props.processedImageString} download="image"> Download as .png </a>
           </div>
         </div>
       ) 

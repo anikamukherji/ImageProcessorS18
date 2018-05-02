@@ -50,6 +50,13 @@ class LoginScreen extends Component {
             />
           </div>
 
+          <div align="center" className="footer">
+            <p> BME590 Final Project </p>
+            <p> Anika Mukherji </p>
+            <p> Zhiwei Kang </p>
+            <p> Yi Zhao </p>
+          </div>
+
         </div>
       </MuiThemeProvider>
     </div>

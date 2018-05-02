@@ -7,9 +7,9 @@ import Toggle from 'material-ui/Toggle';
 import DefaultImage from '../images/default.jpg';
 import axios from 'axios';
 import '../css/ImageProcessor.css';
+import '../css/App.css';
 
-//var hostName = "http://vcm-3576.vm.duke.edu:5000/"
-var hostName = "http://127.0.0.1:5000/"
+var hostName = "http://vcm-3576.vm.duke.edu:5000/"
 
 class ImageProcessor extends Component {
 
@@ -46,7 +46,6 @@ class ImageProcessor extends Component {
         currentImageType: fileType,
       });
       this.prepFile(file);
-      console.log(this.state.currentImageString)
     }
   }
 
@@ -115,6 +114,7 @@ class ImageProcessor extends Component {
       let base64Image = b64string.split('b\'').pop();
       base64Image = base64Image.slice(0, base64Image.length-3)
       base64Image = "data:image/png;base64," + base64Image
+      console.log(response)
 
       this.setState({
         processedImageString: base64Image,
@@ -124,23 +124,39 @@ class ImageProcessor extends Component {
         imageWidth: data.image_size[0],
         processedImageReceived: true,
       });
-      console.log(this.state.currentImageString)
-      console.log(this.state.processedImageString)
     });
   }
 
   renderStats = () => {
-    if (this.state.processedImageReceived) {
-      return (
-        <div className="stats">
-          The image size has width {this.state.imageWidth} and height {this.state.imageHeight}
-            <br/>
-          You have performed this action {this.state.processCount} times!
-            <br/>
-          The last processing took {this.state.lastProcessTime} to complete
-        </div>
-      )
-    } 
+    if (this.state.userPressedButton) {
+      if (this.state.processedImageReceived) {
+        if (this.props.username != "Visitor") {
+          return (
+            <div className="stats">
+              The image size has width {this.state.imageWidth} and height {this.state.imageHeight}
+                <br/>
+              You have performed this action {this.state.processCount} times!
+                <br/>
+              The last processing took {this.state.lastProcessTime} to complete
+            </div>
+          )
+        } else {
+          return (
+            <div className="stats">
+              The image size has width {this.state.imageWidth} and height {this.state.imageHeight}
+                <br/>
+              The last processing took {this.state.lastProcessTime} to complete
+            </div>
+          )
+        }
+      } else {
+        return (
+          <div className="stats">
+            Image is processing - please be patient!
+          </div>
+        )
+      } 
+    }
   }
 
   render() {
@@ -148,7 +164,7 @@ class ImageProcessor extends Component {
       <div className="container">
         <MuiThemeProvider muiTheme={muiTheme}>
           <p className="basic-text"> Welcome {this.props.username}! </p>
-          <p className="basic-text"> Click on the image on the left to upload your own </p>
+          <p className="basic-text"> Click on the image to upload your own </p>
             <div className="toggle">
               <Toggle
                 label="Black Frame"
@@ -174,7 +190,13 @@ class ImageProcessor extends Component {
           <ButtonView onClickParentCallback={this.onClick}/>
         </MuiThemeProvider>
 
-        <p className="footer-text"> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
+        <div className="footer-text">
+          <p> Default Photo: Photo by Dylan Gialanella on Unsplash</p>
+          <p> BME590 Final Project </p>
+          <p> Anika Mukherji </p>
+          <p> Zhiwei Kang </p>
+          <p> Yi Zhao </p>
+        </div>
       </div>
     );
   }
