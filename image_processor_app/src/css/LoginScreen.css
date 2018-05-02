@@ -15,7 +15,7 @@
 }
 
 .footer {
-  position:fixed;
+  padding-top:50px;
   bottom: 10px;
   width: 100%;
   margin: auto;
