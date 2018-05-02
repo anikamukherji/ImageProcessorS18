@@ -199,14 +199,18 @@ def contrast_stretching_processing():
         return jsonify(err), 400
     stripped_string = strip_image(image_new, file_type)
 
-    id1 = str(uuid.uuid4())
-    suffix = ".png"
-    id1 = id1 + suffix
+    suffix = "." + file_type
+    suffix_id2 = ".png"
+    id1_ori = str(uuid.uuid4())
+    id1_temp = id1_ori + suffix
     id2 = str(uuid.uuid4())
-    id2 = id2 + suffix
+    id2 = id2 + ".png"
 
     start_time = datetime.datetime.now()
-    decode_image(stripped_string, id1)
+    decode_image(stripped_string, id1_temp)
+    id1 = id1_ori + ".png"
+    im = Image.open(id1_temp)
+    im.save(id1)
     processed_image = contrast_stretching(id1, id2)
     # histogram_original = histogram(id1)
     # histogram_processed = histogram(id2)
@@ -249,14 +253,18 @@ def log_compression_processing():
         return jsonify(err), 400
     stripped_string = strip_image(image_new, file_type)
 
-    id1 = str(uuid.uuid4())
-    suffix = ".png"
-    id1 = id1 + suffix
+    id1_ori = str(uuid.uuid4())
+    suffix = "." + file_type
+    suffix_id2 = ".png"
+    id1_temp = id1_ori + suffix
     id2 = str(uuid.uuid4())
-    id2 = id2 + suffix
+    id2 = id2 + suffix_id2
 
     start_time = datetime.datetime.now()
-    decode_image(stripped_string, id1)
+    decode_image(stripped_string, id1_temp)
+    id1 = id1_ori + ".png"
+    im = Image.open(id1_temp)
+    im.save(id1)
     processed_image = log_compression(id1, id2)
     end_time = datetime.datetime.now()
     # histogram_original = histogram(id1)
@@ -300,14 +308,17 @@ def reverse_video_processing():
         return jsonify(err), 400
     stripped_string = strip_image(image_new, file_type)
 
-    id1 = str(uuid.uuid4())
-    suffix = ".png"
-    id1 = id1 + suffix
+    id1_origin = str(uuid.uuid4())
+    suffix = "." + file_type
+    id1 = id1_origin + suffix
     id2 = str(uuid.uuid4())
-    id2 = id2 + suffix
+    id2 = id2 + ".png"
 
     start_time = datetime.datetime.now()
-    decode_image(stripped_string, id1)
+    decode_image(stripped_string, id1_temp)
+    id1 = id1_origin + ".png"
+    im = Image.open(id1_temp)
+    im.save(id1)
     processed_image = reverse_video(id1, id2)
     # histogram_original = histogram(id1)
     # histogram_processed = histogram(id2)
