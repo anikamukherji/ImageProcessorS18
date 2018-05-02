@@ -15,7 +15,9 @@ class ImageView extends Component {
         <div className="processed-image-container">
           <div style={frameStyle}>
             <div className="dropzone">
+              <a href={this.props.processedImageString} download="image.png">
               <img className="selected-image" id='selImg' src={this.props.processedImageString} alt="None Selected"/>
+              </a>
             </div>
           </div>
           <div className="download-container">
