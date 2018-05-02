@@ -24,6 +24,7 @@ from Server.image_module.log_compression import *
 from Server.image_module.reverse_video import *
 from Server.image_module.contrast_stretching import *
 from Server.image_module.strip_image import *
+from PIL import Image
 
 app = Flask(__name__)
 CORS(app)
@@ -140,16 +141,20 @@ def histogram_equalization_processing():
         return jsonify(err), 400
     stripped_image = strip_image(image, file_type)
 
-    suffix = ".png"
+    suffix = "." + file_type
+    suffix_id2 = ".png"
     # id1 is where the original file will be stored
     filename1 = str(uuid.uuid4())
-    id1 = filename1 + suffix
+    id1_temp = filename1 + suffix
     # id2 is where the processed file will be stored
     filename2 = str(uuid.uuid4())
-    id2 = filename2 + suffix
+    id2 = filename2 + suffix_id2
 
     start_time = datetime.datetime.now()
-    decode_image(stripped_image, id1)
+    decode_image(stripped_image, id1_temp)
+    id1 = filename1 + ".png"
+    im = Image.open(id1_temp)
+    im.save(id1)
     # processed_image dictionary will be returned
     processed_image = histogram_equalization(id1, id2)
     # histogram_original = histogram(id1)
