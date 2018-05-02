@@ -114,7 +114,6 @@ class ImageProcessor extends Component {
       let base64Image = b64string.split('b\'').pop();
       base64Image = base64Image.slice(0, base64Image.length-3)
       base64Image = "data:image/png;base64," + base64Image
-      console.log(response)
 
       this.setState({
         processedImageString: base64Image,
@@ -130,7 +129,7 @@ class ImageProcessor extends Component {
   renderStats = () => {
     if (this.state.userPressedButton) {
       if (this.state.processedImageReceived) {
-        if (this.props.username != "Visitor") {
+        if (this.props.username !== "Visitor") {
           return (
             <div className="stats">
               The image size has width {this.state.imageWidth} and height {this.state.imageHeight}
