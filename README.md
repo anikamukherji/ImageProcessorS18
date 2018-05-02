@@ -19,8 +19,16 @@ cd ImageProcessorS18/image_processor_app
 npm install
 npm run start
 ```
+## Final performance of this web App
+This image processing web app could achieve the following functions:
+1. Create user/login as an exsiting user or vistor
+2. Upload image one at a time in any formats
+3. Customers have four image processing options including histogram equalization, contrast stretching, log compression, and reverse video.
+4. Download the processed image in .png format.
+5. The customers are able to see how many times they have utilized a particular image processing option, size of their image and the time to process their image.
+___
 
-Here are some images of the app: 
+### Here are some images of the app:
 
 ![image1](./images/image1.png)
 ![image2](./images/image2.png)
