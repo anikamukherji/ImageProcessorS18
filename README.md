@@ -19,6 +19,8 @@ cd ImageProcessorS18/image_processor_app
 npm install
 npm run start
 ```
+Also Here is the `deployed link` to our Web service : http://bme590-learnfast.surge.sh/
+
 ## Final performance of this web App
 This image processing web app could achieve the following functions:
 1. Create user/login as an exsiting user or vistor
